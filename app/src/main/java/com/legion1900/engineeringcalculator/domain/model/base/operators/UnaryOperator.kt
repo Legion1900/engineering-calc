@@ -1,13 +1,16 @@
 package com.legion1900.engineeringcalculator.domain.model.base.operators
 
-import com.legion1900.engineeringcalculator.domain.model.base.operands.Operand
+import java.math.BigDecimal
 
 /*
 * Interface that represents unary operator.
 * */
-interface UnaryOperator<T> :
-    Operator<T> where T : Number {
-    override fun execute(vararg args: Operand<T>): Operand<T> = execute(args[0])
+interface UnaryOperator :
+    Operator {
+    override val arity: Int
+        get() = 1
 
-    fun execute(arg: Operand<T>): Operand<T>
+    override fun execute(vararg args: BigDecimal): BigDecimal = execute(args[0])
+
+    fun execute(arg: BigDecimal): BigDecimal
 }
