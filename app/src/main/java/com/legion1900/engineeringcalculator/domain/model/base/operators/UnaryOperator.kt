@@ -5,12 +5,10 @@ import java.math.BigDecimal
 /*
 * Interface that represents unary operator.
 * */
-interface UnaryOperator :
-    Operator {
-    override val arity: Int
-        get() = 1
+abstract class UnaryOperator(denotation: String, precedence: Precedence) :
+    Operator(1, denotation, precedence) {
 
     override fun execute(vararg args: BigDecimal): BigDecimal = execute(args[0])
 
-    fun execute(arg: BigDecimal): BigDecimal
+    abstract fun execute(arg: BigDecimal): BigDecimal
 }
