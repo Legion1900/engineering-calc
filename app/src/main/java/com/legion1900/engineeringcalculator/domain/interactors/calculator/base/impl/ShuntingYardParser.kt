@@ -1,19 +1,21 @@
-package com.legion1900.engineeringcalculator.domain.interactors.impl
+package com.legion1900.engineeringcalculator.domain.interactors.calculator.base.impl
 
-import com.legion1900.engineeringcalculator.domain.interactors.base.Interactor
+import com.legion1900.engineeringcalculator.domain.interactors.calculator.base.Parser
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
 import java.util.*
 
 const val SEPARATOR = " "
 
-class ParserInteractor(exp: String) : Interactor {
+//TODO: add support for unary operators (unary function)
 
+/*
+* Partial implementation of shunting-yard algorithm.
+* Does not support not unary functions
+* */
+class ShuntingYardParser(exp: String) : Parser {
     val expression: List<String> by lazy { exp.split(SEPARATOR) }
 
-    override fun execute() {
-    }
-
-    fun toPostfix(): List<String> {
+    override fun toPostfix(): List<String> {
         val operators = Operators.map
         val opStack = Stack<String>()
         val postfix = mutableListOf<String>()
@@ -72,9 +74,26 @@ class ParserInteractor(exp: String) : Interactor {
         return postfix
     }
 
-    fun isOperand(token: String) = !Operators.map.containsKey(token)
+    private fun isOperand(token: String) = !Operators.map.containsKey(token)
 
-    fun isLeftParentheses(token: String) = Operators.map[token] == Operators.ParenthesesLeft
+    private fun isLeftParentheses(token: String) = Operators.map[token] == Operators.ParenthesesLeft
 
-    fun isRightParentheses(token: String) = Operators.map[token] == Operators.ParenthesesRight
+    private fun isRightParentheses(token: String) = Operators.map[token] == Operators.ParenthesesRight
+
+    public fun isUnaryMinus(tokenInd: Int): Boolean {
+        /*
+        * It`s not unary minus if it isn`t a minus operator.
+        * */
+        if (Operators.map[expression[tokenInd]] != Operators.Subtraction) return false
+        val previousTokenInd = tokenInd - 1
+        return if (previousTokenInd > 0) {
+            val prevToken = expression[previousTokenInd]
+            isLeftParentheses(prevToken)
+        }
+        /*
+        * It`s unary minus if it`s minus & first token in expression
+        * */
+        else true
+    }
+
 }

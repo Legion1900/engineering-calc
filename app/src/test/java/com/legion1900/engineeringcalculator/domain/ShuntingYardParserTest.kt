@@ -1,11 +1,11 @@
 package com.legion1900.engineeringcalculator.domain
 
-import com.legion1900.engineeringcalculator.domain.interactors.impl.ParserInteractor
+import com.legion1900.engineeringcalculator.domain.interactors.calculator.base.impl.ShuntingYardParser
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.lang.StringBuilder
 
-class ParserInteractorTest {
+class ShuntingYardParserTest {
 
     val inputOutput = mapOf(
         "A + B" to "A B +",
@@ -19,7 +19,7 @@ class ParserInteractorTest {
     @Test
     fun toPostfix_isCorrect() {
         for (pair in inputOutput)
-            assertEquals("Input: ${pair.key}", pair.value, toString(ParserInteractor(pair.key).toPostfix()))
+            assertEquals("Input: ${pair.key}", pair.value, toString(ShuntingYardParser(pair.key).toPostfix()))
     }
 
     fun toString(list: List<String>): String {
