@@ -8,9 +8,6 @@ import java.util.*
 
 const val SEPARATOR = " "
 
-const val PARENTHESES_L = "("
-const val PARENTHESES_R = ")"
-
 class ParserInteractor(val exp: String) : Interactor {
 
     companion object {
