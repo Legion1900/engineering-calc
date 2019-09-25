@@ -34,6 +34,7 @@ class Parentheses(val symbol: String) :
 * Enum of supported operations and their denotations
 * */
 enum class Operators(operation: AbstractOperator) : Operator by operation {
+
     Summation(object : BinAbstractOperator("+", Precedence.Additive.ordinal) {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left + right
     }),
@@ -52,5 +53,19 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
 
     ParenthesesLeft(Parentheses("(")),
 
-    ParenthesesRight(Parentheses(")")),
+    ParenthesesRight(Parentheses(")"));
+
+    companion object {
+        /*
+        * Property that returns a map<denotation, Operator>
+        */
+        val map: Map<String, Operator> by lazy {
+            val opList = enumValues<Operators>()
+            val map = mutableMapOf<String, Operator>()
+            for (op in opList) {
+                map[op.denotation] = op
+            }
+            map.toMap()
+        }
+    }
 }
