@@ -3,6 +3,7 @@ package com.legion1900.engineeringcalculator.domain.model.impl.operators
 import com.legion1900.engineeringcalculator.domain.model.base.operators.AbstractOperator
 import com.legion1900.engineeringcalculator.domain.model.base.operators.BinAbstractOperator
 import com.legion1900.engineeringcalculator.domain.model.base.operators.Operator
+import com.legion1900.engineeringcalculator.domain.model.base.operators.UnaryAbstractOperator
 import java.math.BigDecimal
 
 /*
@@ -11,9 +12,9 @@ import java.math.BigDecimal
 enum class Precedence(value: Int) {
     Parentheses(0),
     /*
-    * Complex functions such as sin, cos, sqrt, pow, etc.
+    * Unary functions and operators
     * */
-    Functions(1),
+    Unary(1),
     /*
     * For such ops as *, /, remainder.
     * */
@@ -49,6 +50,10 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
 
     Division(object : BinAbstractOperator("/", Precedence.Multiplicative.ordinal) {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left / right
+    }),
+
+    UnaryMinus(object : UnaryAbstractOperator("unaryMin", Precedence.Unary.ordinal) {
+        override fun execute(arg: BigDecimal): BigDecimal = -arg
     }),
 
     ParenthesesLeft(Parentheses("(")),
