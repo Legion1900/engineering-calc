@@ -5,8 +5,8 @@ import java.math.BigDecimal
 /*
 * Interface that represents unary operator.
 * */
-abstract class UnaryOperator(denotation: String, precedence: Precedence) :
-    Operator(1, denotation, precedence) {
+abstract class UnaryAbstractOperator(denotation: String, precedence: Precedence) :
+    AbstractOperator(1, denotation, precedence) {
 
     override fun execute(vararg args: BigDecimal): BigDecimal = execute(args[0])
 
