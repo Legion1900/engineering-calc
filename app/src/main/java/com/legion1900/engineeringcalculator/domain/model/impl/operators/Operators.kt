@@ -56,9 +56,6 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
     ParenthesesRight(Parentheses(")"));
 
     companion object {
-        /*
-        * Property that returns a map<denotation, Operator>
-        */
         val map: Map<String, Operator> by lazy {
             val opList = enumValues<Operators>()
             val map = mutableMapOf<String, Operator>()

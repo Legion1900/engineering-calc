@@ -28,12 +28,13 @@ class ParserInteractor(exp: String) : Interactor {
             * */
             else if (isLeftParentheses(token)) opStack.push(token)
             /*
-            * If token is a right parentheses opStack.pop => postfix until ')' is met*/
+            * If token is a right parentheses opStack.pop => postfix until ')' is met.
+            * */
             else if (isRightParentheses(token)) {
-                while(true) {
+                while(opStack.isNotEmpty()) {
                     val op = opStack.pop()
                     if (isLeftParentheses(op)) break
-                    postfix += op
+                    else postfix += op
                 }
             }
             /*
@@ -47,6 +48,10 @@ class ParserInteractor(exp: String) : Interactor {
                 * */
                 while(opStack.isNotEmpty()) {
                     val op = opStack.peek()
+                    /*
+                    * Parentheses are special operators and should not be appended to postfix
+                    * */
+                    if (isLeftParentheses(op) || isRightParentheses(op)) break
                     val tokenPrecedence = operators.getValue(token).precedence
                     val opPrecedence = operators.getValue(op).precedence
                     if (opPrecedence <= tokenPrecedence) postfix += opStack.pop()
