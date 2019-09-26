@@ -1,4 +1,4 @@
-package com.legion1900.engineeringcalculator.domain.interactors.calculator.base.impl
+package com.legion1900.engineeringcalculator.domain.interactors.calculator.impl
 
 import com.legion1900.engineeringcalculator.domain.interactors.calculator.base.Parser
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
@@ -55,7 +55,7 @@ class ShuntingYardParser(exp: String) : Parser {
                 while(opStack.isNotEmpty()) {
                     val op = opStack.peek()
                     /*
-                    * Parentheses are special operators and should not be appended to postfix
+                    * Special are special operators and should not be appended to postfix
                     * */
                     if (isLeftParentheses(op) || isRightParentheses(op)) break
                     val tokenPrecedence = operators.getValue(token).precedence

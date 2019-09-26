@@ -2,37 +2,11 @@ package com.legion1900.engineeringcalculator.domain.model.impl.operators
 
 import com.legion1900.engineeringcalculator.domain.model.base.operators.*
 import java.math.BigDecimal
+import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.sqrt
 
-/*
-* The less value it holds, the higher precedence it is.
-* */
-enum class Precedence(value: Int) {
-    Parentheses(-1),
-    /*
-    * Functions
-    * */
-    Function(0),
-    /*
-    * Unary operators
-    * */
-    Unary(1),
-    /*
-    * For such ops as *, /, remainder.
-    * */
-    Multiplicative(2),
-    /*
-    * For such ops as +, -
-    * */
-    Additive(3)
-}
-
-class Parentheses(val symbol: String) :
-    AbstractOperator(0, symbol, Precedence.Parentheses.ordinal) {
-    override fun execute(vararg args: BigDecimal): BigDecimal =
-        throw UnsupportedOperationException()
-}
-
+//TODO: add coma operator for parameter separation
 /*
 * Enum of supported operations and their denotations
 * */
@@ -54,17 +28,37 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left / right
     }),
 
-    UnaryMinus(object : UnaryAbstractOperator("unaryMin", Precedence.Unary.ordinal) {
+    ToPower(object : BinAbstractOperator("^", Precedence.Multiplicative.ordinal) {
+        override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left / right
+    }),
+
+    UnaryMinus(object : UnaryAbstractOperator("unaryMin") {
         override fun execute(arg: BigDecimal): BigDecimal = -arg
     }),
 
-    Sinus(object : UnaryFunction("sin", Precedence.Function.ordinal) {
+    Sinus(object : UnaryAbstractFunction("sin") {
         override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(sin(arg.toDouble()))
     }),
 
-    ParenthesesLeft(Parentheses("(")),
+    Cosine(object : UnaryAbstractFunction("cos") {
+        override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(cos(arg.toDouble()))
+    }),
 
-    ParenthesesRight(Parentheses(")"));
+    SquareRoot(object : UnaryAbstractFunction("sqrt") {
+        override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(sqrt(arg.toDouble()))
+    }),
+
+    ParenthesesLeft(
+        AbstractSpecial(
+            "("
+        )
+    ),
+
+    ParenthesesRight(
+        AbstractSpecial(
+            ")"
+        )
+    );
 
 //    -----------------------------------------------------------------------------------------
 

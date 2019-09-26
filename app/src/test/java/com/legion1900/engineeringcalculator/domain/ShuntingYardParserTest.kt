@@ -1,6 +1,6 @@
 package com.legion1900.engineeringcalculator.domain
 
-import com.legion1900.engineeringcalculator.domain.interactors.calculator.base.impl.ShuntingYardParser
+import com.legion1900.engineeringcalculator.domain.interactors.calculator.impl.ShuntingYardParser
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.lang.StringBuilder
