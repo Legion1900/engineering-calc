@@ -18,6 +18,7 @@ const val SEPARATOR = " "
 class ShuntingYardParser(exp: String) : Parser {
     private val expression: List<String> by lazy { exp.split(SEPARATOR) }
 
+    //    TODO: add support for comma operator
     override fun toPostfix(): List<String> {
         val operators = Operators.map
         val opStack = Stack<String>()
@@ -33,10 +34,11 @@ class ShuntingYardParser(exp: String) : Parser {
             * */
             else if (isLeftParentheses(token)) opStack.push(token)
             /*
-            * If token is a right parentheses opStack.pop => postfix until ')' is met.
+            * If token is a right parentheses OR a comma separator:
+            * opStack.pop => postfix until ')' is met.
             * */
-            else if (isRightParentheses(token)) {
-                while(opStack.isNotEmpty()) {
+            else if (isRightParentheses(token) || isCommaSeparator(token)) {
+                while (opStack.isNotEmpty()) {
                     val op = opStack.pop()
                     if (isLeftParentheses(op)) break
                     else postfix += op
@@ -52,12 +54,13 @@ class ShuntingYardParser(exp: String) : Parser {
                 /*
                 * Move operators from opStack.
                 * */
-                while(opStack.isNotEmpty()) {
+                while (opStack.isNotEmpty()) {
                     val op = opStack.peek()
                     /*
-                    * Special are special operators and should not be appended to postfix
+                    * In this implementation parentheses are Special but still Operators.
+                    * Special operators should not be present in postfix.
                     * */
-                    if (isLeftParentheses(op) || isRightParentheses(op)) break
+                    if (isLeftParentheses(op)) break
                     val tokenPrecedence = operators.getValue(token).precedence
                     val opPrecedence = operators.getValue(op).precedence
                     if (opPrecedence <= tokenPrecedence) postfix += opStack.pop()
@@ -82,9 +85,14 @@ class ShuntingYardParser(exp: String) : Parser {
 
     private fun isOperand(token: String) = !Operators.map.containsKey(token)
 
-    private fun isLeftParentheses(token: String) = Operators.map[token] == Operators.ParenthesesLeft
+    private fun isLeftParentheses(token: String) =
+        Operators.map[token] == Operators.ParenthesesLeft
 
-    private fun isRightParentheses(token: String) = Operators.map[token] == Operators.ParenthesesRight
+    private fun isRightParentheses(token: String) =
+        Operators.map[token] == Operators.ParenthesesRight
+
+    private fun isCommaSeparator(token: String) =
+        Operators.map[token] == Operators.CommaSeparator
 
     private fun isUnaryMinus(tokenInd: Int): Boolean {
         /*

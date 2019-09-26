@@ -6,7 +6,9 @@ abstract class AbstractOperator(
     override val arity: Int,
     override val denotation: String,
     override val precedence: Int
-) : Operator
+) : Operator {
+    override fun toString(): String = denotation
+}
 
 /*
 * Interface that represents unary operator.

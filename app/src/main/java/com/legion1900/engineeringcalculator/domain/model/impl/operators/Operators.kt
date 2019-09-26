@@ -48,17 +48,11 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
         override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(sqrt(arg.toDouble()))
     }),
 
-    ParenthesesLeft(
-        AbstractSpecial(
-            "("
-        )
-    ),
+    CommaSeparator(Special(",")),
 
-    ParenthesesRight(
-        AbstractSpecial(
-            ")"
-        )
-    );
+    ParenthesesLeft(Special("(")),
+
+    ParenthesesRight(Special(")"));
 
 //    -----------------------------------------------------------------------------------------
 
