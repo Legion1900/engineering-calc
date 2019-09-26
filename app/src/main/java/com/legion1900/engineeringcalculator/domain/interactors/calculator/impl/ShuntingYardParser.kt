@@ -6,16 +6,12 @@ import java.util.*
 
 const val SEPARATOR = " "
 
-//TODO: add support for unary operators (unary function)
-
 //TODO: add separate class for formatting string string (adding spaces after opening and before closing parentheses)
 
 /*
 * Partial implementation of shunting-yard algorithm.
-* Does not support not unary functions;
-* Does not support unary minus;
 * */
-class ShuntingYardParser() : Parser {
+class ShuntingYardParser : Parser {
     private val expression = mutableListOf<String>()
 
     private val opStack = Stack<String>()
@@ -32,19 +28,19 @@ class ShuntingYardParser() : Parser {
             /*
             * If token is an operand append it to the end of postfix
             * */
-            if (isOperand(token)) postfix.add(token)
+            if (token.isOperand) postfix.add(token)
             /*
             * If token is a left parentheses push it to opStack
             * */
-            else if (isLeftParentheses(token)) opStack.push(token)
+            else if (token.isOperator(Operators.ParenthesesLeft)) opStack.push(token)
             /*
             * If token is a right parentheses OR a comma separator:
             * opStack.pop => postfix until ')' is met.
             * */
-            else if (isRightParentheses(token) || isCommaSeparator(token)) {
+            else if (token.isOperator(Operators.ParenthesesRight)) {
                 while (opStack.isNotEmpty()) {
                     val op = opStack.pop()
-                    if (isLeftParentheses(op)) break
+                    if (op.isOperator(Operators.ParenthesesLeft)) break
                     else postfix += op
                 }
             }
@@ -64,7 +60,7 @@ class ShuntingYardParser() : Parser {
                     * In this implementation parentheses are Special but still Operators.
                     * Special operators should not be present in postfix.
                     * */
-                    if (isLeftParentheses(op)) break
+                    if (op.isOperator(Operators.ParenthesesLeft)) break
                     val tokenPrecedence = operators.getValue(token).precedence
                     val opPrecedence = operators.getValue(op).precedence
                     if (opPrecedence <= tokenPrecedence) postfix += opStack.pop()
@@ -87,16 +83,11 @@ class ShuntingYardParser() : Parser {
         return postfix
     }
 
-    private fun isOperand(token: String) = !Operators.map.containsKey(token)
+    private val String.isOperand: Boolean
+        get() = !Operators.map.containsKey(this)
 
-    private fun isLeftParentheses(token: String) =
-        Operators.map[token] == Operators.ParenthesesLeft
-
-    private fun isRightParentheses(token: String) =
-        Operators.map[token] == Operators.ParenthesesRight
-
-    private fun isCommaSeparator(token: String) =
-        Operators.map[token] == Operators.CommaSeparator
+    private fun String.isOperator(op: Operators) =
+        Operators.map[this] == op
 
     private fun isUnaryMinus(tokenInd: Int): Boolean {
         /*
@@ -109,7 +100,8 @@ class ShuntingYardParser() : Parser {
             /*
             * It`s unary minus if it`s minus & first token after parentheses
             * */
-            isLeftParentheses(prevToken)
+//            isLeftParentheses(prevToken)
+            prevToken.isOperator(Operators.ParenthesesLeft)
         }
         /*
         * It`s unary minus if it`s minus & first token in expression
