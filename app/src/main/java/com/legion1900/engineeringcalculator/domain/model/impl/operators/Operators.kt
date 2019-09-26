@@ -2,14 +2,19 @@ package com.legion1900.engineeringcalculator.domain.model.impl.operators
 
 import com.legion1900.engineeringcalculator.domain.model.base.operators.*
 import java.math.BigDecimal
+import kotlin.math.sin
 
 /*
 * The less value it holds, the higher precedence it is.
 * */
 enum class Precedence(value: Int) {
-    Parentheses(0),
+    Parentheses(-1),
     /*
-    * Unary functions and operators
+    * Functions
+    * */
+    Function(0),
+    /*
+    * Unary operators
     * */
     Unary(1),
     /*
@@ -53,15 +58,15 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
         override fun execute(arg: BigDecimal): BigDecimal = -arg
     }),
 
-    Sinus(object : UnaryFunction("sin", Precedence.Unary.ordinal) {
-        override fun execute(arg: BigDecimal): BigDecimal {
-            TODO("BigDecimal.double -> sin()")
-        }
+    Sinus(object : UnaryFunction("sin", Precedence.Function.ordinal) {
+        override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(sin(arg.toDouble()))
     }),
 
     ParenthesesLeft(Parentheses("(")),
 
     ParenthesesRight(Parentheses(")"));
+
+//    -----------------------------------------------------------------------------------------
 
     companion object {
         val map: Map<String, Operator> by lazy {
