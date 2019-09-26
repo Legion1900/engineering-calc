@@ -29,8 +29,9 @@ class ShuntingYardParserTest {
 
     @Test
     fun toPostfix_isCorrect() {
+        val parser = ShuntingYardParser()
         for (pair in toPostfixValues)
-            assertEquals("Input: ${pair.key}", pair.value, toString(ShuntingYardParser(pair.key).toPostfix()))
+            assertEquals("Input: ${pair.key}", pair.value, toString(parser.toPostfix(pair.key)))
     }
 
     fun toString(list: List<String>): String {
