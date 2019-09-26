@@ -1,6 +1,7 @@
 package com.legion1900.engineeringcalculator.domain.model.impl.operators
 
 import com.legion1900.engineeringcalculator.domain.model.base.operators.*
+import java.lang.Math.pow
 import java.math.BigDecimal
 import kotlin.math.cos
 import kotlin.math.sin
@@ -46,6 +47,11 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
 
     SquareRoot(object : UnaryAbstractFunction("sqrt") {
         override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(sqrt(arg.toDouble()))
+    }),
+
+    Power(object : AbstractFunction(2, "pow") {
+        override fun execute(vararg args: BigDecimal): BigDecimal =
+            BigDecimal(pow(args[0].toDouble(), args[1].toDouble()))
     }),
 
     CommaSeparator(Special(",")),

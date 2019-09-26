@@ -13,8 +13,8 @@ const val SEPARATOR = " "
 * */
 class ShuntingYardParser : Parser {
     private val expression = mutableListOf<String>()
-
     private val opStack = Stack<String>()
+    private val postfix = mutableListOf<String>()
 
     //    TODO: add support for comma operator
     override fun toPostfix(exp: String): List<String> {
@@ -22,7 +22,7 @@ class ShuntingYardParser : Parser {
         expression.addAll(exp.split(SEPARATOR))
         val operators = Operators.map
         opStack.clear()
-        val postfix = mutableListOf<String>()
+        postfix.clear()
 
         for (token in expression) {
             /*
@@ -38,12 +38,18 @@ class ShuntingYardParser : Parser {
             * opStack.pop => postfix until ')' is met.
             * */
             else if (token.isOperator(Operators.ParenthesesRight)) {
-                while (opStack.isNotEmpty()) {
-                    val op = opStack.pop()
-                    if (op.isOperator(Operators.ParenthesesLeft)) break
-                    else postfix += op
-                }
+//                while (opStack.isNotEmpty()) {
+//                    val op = opStack.pop()
+//                    if (op.isOperator(Operators.ParenthesesLeft)) break
+//                    else postfix += op
+//                }
+                popUntil(Operators.ParenthesesLeft)
+                if (opStack.isNotEmpty()) opStack.pop()
             }
+            /*
+            * Comma separator case: opStack.pop => postfix until left parentheses is met.
+            * */
+            else if (token.isOperator(Operators.CommaSeparator)) popUntil(Operators.ParenthesesLeft)
             /*
             * If token is an operator:
             * 0) check if it`s unary minus:
@@ -83,6 +89,19 @@ class ShuntingYardParser : Parser {
         return postfix
     }
 
+
+    /*
+    * Removes operators from opStack and appends them to postfix until target operator i met.
+    * Target operator is not removed from opStack.
+    * */
+    fun popUntil(target: Operators) {
+        while (opStack.isNotEmpty()) {
+            val op = opStack.peek()
+            if (op.isOperator(target)) break
+            else postfix += opStack.pop()
+        }
+    }
+
     private val String.isOperand: Boolean
         get() = !Operators.map.containsKey(this)
 
@@ -100,7 +119,6 @@ class ShuntingYardParser : Parser {
             /*
             * It`s unary minus if it`s minus & first token after parentheses
             * */
-//            isLeftParentheses(prevToken)
             prevToken.isOperator(Operators.ParenthesesLeft)
         }
         /*
@@ -108,5 +126,4 @@ class ShuntingYardParser : Parser {
         * */
         else true
     }
-
 }
