@@ -15,13 +15,17 @@ const val SEPARATOR = " "
 * Does not support not unary functions;
 * Does not support unary minus;
 * */
-class ShuntingYardParser(exp: String) : Parser {
-    private val expression: List<String> by lazy { exp.split(SEPARATOR) }
+class ShuntingYardParser() : Parser {
+    private val expression = mutableListOf<String>()
+
+    private val opStack = Stack<String>()
 
     //    TODO: add support for comma operator
-    override fun toPostfix(): List<String> {
+    override fun toPostfix(exp: String): List<String> {
+        expression.clear()
+        expression.addAll(exp.split(SEPARATOR))
         val operators = Operators.map
-        val opStack = Stack<String>()
+        opStack.clear()
         val postfix = mutableListOf<String>()
 
         for (token in expression) {
