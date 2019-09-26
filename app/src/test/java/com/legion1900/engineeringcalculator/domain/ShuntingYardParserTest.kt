@@ -24,7 +24,10 @@ class ShuntingYardParserTest {
         "- A * B / ( C + D )" to "A unaryMin B * C D + /",
 //        Input values for unary minus
         "sin ( a ) * A" to "a sin A *",
-        "- sin ( a + b )" to "a b + sin unaryMin"
+        "- sin ( a + b )" to "a b + sin unaryMin",
+//        Testing function with arbitrary args number
+        "pow ( cos ( pow ( A , B ) ) , sin ( A + B ) )" to "A B pow cos A B + sin pow",
+        "C * pow ( B , P )" to "C B P pow *"
     )
 
     @Test
