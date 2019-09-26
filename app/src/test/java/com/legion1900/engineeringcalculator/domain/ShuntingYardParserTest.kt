@@ -7,18 +7,26 @@ import java.lang.StringBuilder
 
 class ShuntingYardParserTest {
 
-    val inputOutput = mapOf(
+    /*
+    * Input values for testing toPostfix
+    * */
+    val toPostfixValues = mapOf(
+//        General input values.
         "A + B" to "A B +",
         "A + B * C" to "A B C * +",
         "A + B * C + D" to "A B C * + D +",
         "( A + B ) * ( C + D )" to "A B + C D + *",
         "A * B + C * D" to "A B * C D * +",
-        "A + B + C + D" to "A B + C + D +"
+        "A + B + C + D" to "A B + C + D +",
+//        Input values for unary minus.
+        "- A + B" to "A unaryMin B +",
+        "- ( A + B ) * C" to "A B + unaryMin C *",
+        "- A * B / ( C + D )" to "A unaryMin B * C D + /"
     )
 
     @Test
     fun toPostfix_isCorrect() {
-        for (pair in inputOutput)
+        for (pair in toPostfixValues)
             assertEquals("Input: ${pair.key}", pair.value, toString(ShuntingYardParser(pair.key).toPostfix()))
     }
 
