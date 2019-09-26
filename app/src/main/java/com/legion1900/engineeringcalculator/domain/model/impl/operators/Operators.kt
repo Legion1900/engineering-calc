@@ -1,9 +1,6 @@
 package com.legion1900.engineeringcalculator.domain.model.impl.operators
 
-import com.legion1900.engineeringcalculator.domain.model.base.operators.AbstractOperator
-import com.legion1900.engineeringcalculator.domain.model.base.operators.BinAbstractOperator
-import com.legion1900.engineeringcalculator.domain.model.base.operators.Operator
-import com.legion1900.engineeringcalculator.domain.model.base.operators.UnaryAbstractOperator
+import com.legion1900.engineeringcalculator.domain.model.base.operators.*
 import java.math.BigDecimal
 
 /*
@@ -54,6 +51,12 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
 
     UnaryMinus(object : UnaryAbstractOperator("unaryMin", Precedence.Unary.ordinal) {
         override fun execute(arg: BigDecimal): BigDecimal = -arg
+    }),
+
+    Sinus(object : UnaryFunction("sin", Precedence.Unary.ordinal) {
+        override fun execute(arg: BigDecimal): BigDecimal {
+            TODO("BigDecimal.double -> sin()")
+        }
     }),
 
     ParenthesesLeft(Parentheses("(")),
