@@ -1,7 +1,7 @@
 package com.legion1900.engineeringcalculator.domain.interactors.calculator.base
 
-interface Evaluator {
-    fun evaluate() {
+import java.math.BigDecimal
 
-    }
+interface Evaluator {
+    fun evaluate(postfixExp: List<String>): BigDecimal
 }

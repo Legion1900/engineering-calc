@@ -73,3 +73,9 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
         }
     }
 }
+
+val String.isOperand: Boolean
+    get() = !Operators.map.containsKey(this)
+
+fun String.isOperator(op: Operators) =
+    Operators.map[this] == op

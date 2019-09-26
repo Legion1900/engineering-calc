@@ -27,7 +27,8 @@ class ShuntingYardParserTest {
         "- sin ( a + b )" to "a b + sin unaryMin",
 //        Testing function with arbitrary args number
         "pow ( cos ( pow ( A , B ) ) , sin ( A + B ) )" to "A B pow cos A B + sin pow",
-        "C * pow ( B , P )" to "C B P pow *"
+        "C * pow ( B , P )" to "C B P pow *",
+        "sqrt ( pow ( A + B , C * P ) )" to "A B + C P * pow sqrt"
     )
 
     @Test

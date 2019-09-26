@@ -2,11 +2,14 @@ package com.legion1900.engineeringcalculator.domain.interactors.calculator.impl
 
 import com.legion1900.engineeringcalculator.domain.interactors.calculator.base.Parser
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
+import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperand
+import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperator
 import java.util.*
 
 const val SEPARATOR = " "
 
 //TODO: add separate class for formatting string string (adding spaces after opening and before closing parentheses)
+
 
 /*
 * Partial implementation of shunting-yard algorithm.
@@ -101,12 +104,6 @@ class ShuntingYardParser : Parser {
             else postfix += opStack.pop()
         }
     }
-
-    private val String.isOperand: Boolean
-        get() = !Operators.map.containsKey(this)
-
-    private fun String.isOperator(op: Operators) =
-        Operators.map[this] == op
 
     private fun isUnaryMinus(tokenInd: Int): Boolean {
         /*
