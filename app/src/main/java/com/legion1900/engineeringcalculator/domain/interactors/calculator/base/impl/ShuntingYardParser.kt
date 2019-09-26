@@ -8,12 +8,15 @@ const val SEPARATOR = " "
 
 //TODO: add support for unary operators (unary function)
 
+//TODO: add separate class for formatting string string (adding spaces after opening and before closing parentheses)
+
 /*
 * Partial implementation of shunting-yard algorithm.
-* Does not support not unary functions
+* Does not support not unary functions;
+* Does not support unary minus;
 * */
 class ShuntingYardParser(exp: String) : Parser {
-    val expression: List<String> by lazy { exp.split(SEPARATOR) }
+    private val expression: List<String> by lazy { exp.split(SEPARATOR) }
 
     override fun toPostfix(): List<String> {
         val operators = Operators.map
@@ -41,6 +44,7 @@ class ShuntingYardParser(exp: String) : Parser {
             }
             /*
             * If token is an operator:
+            * 0) check if it`s unary minus:
             * 1) move any op`s with less or equal precedence from opStack to postfix and then
             * 2) push token to opStack
             * */
@@ -62,7 +66,9 @@ class ShuntingYardParser(exp: String) : Parser {
                 /*
                 * Add token.
                 * */
-                opStack.push(token)
+                if (isUnaryMinus(expression.indexOf(token)))
+                    opStack.push(Operators.UnaryMinus.denotation)
+                else opStack.push(token)
             }
         }
 
@@ -80,7 +86,7 @@ class ShuntingYardParser(exp: String) : Parser {
 
     private fun isRightParentheses(token: String) = Operators.map[token] == Operators.ParenthesesRight
 
-    public fun isUnaryMinus(tokenInd: Int): Boolean {
+    private fun isUnaryMinus(tokenInd: Int): Boolean {
         /*
         * It`s not unary minus if it isn`t a minus operator.
         * */
@@ -88,6 +94,9 @@ class ShuntingYardParser(exp: String) : Parser {
         val previousTokenInd = tokenInd - 1
         return if (previousTokenInd > 0) {
             val prevToken = expression[previousTokenInd]
+            /*
+            * It`s unary minus if it`s minus & first token after parentheses
+            * */
             isLeftParentheses(prevToken)
         }
         /*
