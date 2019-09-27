@@ -25,7 +25,9 @@ class StackEvaluatorTest {
         "6 / 3.0" to BigDecimal(2),
         "6.0 / 3.0" to BigDecimal(2),
         "- ( 2 + 5 ) * pow ( 2 , 3 )" to BigDecimal(-56),
-        "sqrt ( 4 )" to BigDecimal(2)
+        "sqrt ( 4 )" to BigDecimal(2),
+        "sin ( 90 )" to BigDecimal(1),
+        "sin ( ( pow ( 2 , 3 ) + 1 ) * 10 )" to BigDecimal(1)
     )
 
     lateinit var postfix: MutableMap<String, List<String>>

@@ -3,6 +3,7 @@ package com.legion1900.engineeringcalculator.domain.model.impl.operators
 import com.legion1900.engineeringcalculator.domain.model.base.operators.*
 import java.lang.Math.pow
 import java.math.BigDecimal
+import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -38,11 +39,13 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
     }),
 
     Sinus(object : UnaryAbstractFunction("sin") {
-        override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(sin(arg.toDouble()))
+        override fun execute(arg: BigDecimal): BigDecimal =
+            BigDecimal(sin(degreeToRadians(arg).toDouble()))
     }),
 
     Cosine(object : UnaryAbstractFunction("cos") {
-        override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(cos(arg.toDouble()))
+        override fun execute(arg: BigDecimal): BigDecimal =
+            BigDecimal(cos(degreeToRadians(arg).toDouble()))
     }),
 
     SquareRoot(object : UnaryAbstractFunction("sqrt") {
@@ -90,3 +93,5 @@ fun isUnaryMinus(token: String, prevToken: String?): Boolean {
     * */
     return prevToken?.isOperator(Operators.ParenthesesLeft) ?: true
 }
+
+fun degreeToRadians(degree: BigDecimal): BigDecimal = degree * BigDecimal(PI) / BigDecimal(180)
