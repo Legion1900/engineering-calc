@@ -4,11 +4,16 @@ import com.legion1900.engineeringcalculator.domain.interactors.calculator.base.E
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperand
 import java.math.BigDecimal
+import java.math.MathContext
 import java.util.*
 
 // TODO: create intermediate class that will hold postfix expression if form of two stacks (op&operand)
+//TODO: add precision and round it up
 // (because otherwise I`m doing same work of 'reading' string tokens!)
-class StackEvaluator : Evaluator{
+class StackEvaluator(override val precision: Int = 32) : Evaluator {
+
+    private val context: MathContext = MathContext(precision)
+
     override fun evaluate(postfixExp: List<String>): BigDecimal {
         val operands = Stack<BigDecimal>()
         for (token in postfixExp) {
@@ -31,6 +36,9 @@ class StackEvaluator : Evaluator{
                 operands.push(result)
             }
         }
-        return operands.pop()
+        val result = operands.pop()
+        return round(result)
     }
+
+    override fun round(num: BigDecimal): BigDecimal = num.round(context)
 }

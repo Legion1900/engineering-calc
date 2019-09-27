@@ -15,19 +15,12 @@ const val SEPARATOR = " "
 * Partial implementation of shunting-yard algorithm.
 * */
 class ShuntingYardParser : Parser {
-//    TODO: make those properties method variables again
-//    (if one object of this class is used by couple of threads toPostfix result won`t be correct)
-    private val expression = mutableListOf<String>()
-    private val opStack = Stack<String>()
-    private val postfix = mutableListOf<String>()
 
-    //    TODO: add support for comma operator
     override fun toPostfix(exp: String): List<String> {
-        expression.clear()
-        expression.addAll(exp.split(SEPARATOR))
+        val expression = exp.split(SEPARATOR)
         val operators = Operators.map
-        opStack.clear()
-        postfix.clear()
+        val opStack = Stack<String>()
+        val postfix = mutableListOf<String>()
 
         for (token in expression) {
             /*
@@ -48,13 +41,17 @@ class ShuntingYardParser : Parser {
 //                    if (op.isOperator(Operators.ParenthesesLeft)) break
 //                    else postfix += op
 //                }
-                popUntil(Operators.ParenthesesLeft)
+                popUntil(opStack, postfix, Operators.ParenthesesLeft)
                 if (opStack.isNotEmpty()) opStack.pop()
             }
             /*
             * Comma separator case: opStack.pop => postfix until left parentheses is met.
             * */
-            else if (token.isOperator(Operators.CommaSeparator)) popUntil(Operators.ParenthesesLeft)
+            else if (token.isOperator(Operators.CommaSeparator)) popUntil(
+                opStack,
+                postfix,
+                Operators.ParenthesesLeft
+            )
             /*
             * If token is an operator:
             * 0) check if it`s unary minus:
@@ -79,8 +76,10 @@ class ShuntingYardParser : Parser {
                 }
                 /*
                 * Add token.
+                * If it`s unary minus symbol must be replaced to appropriate.
                 * */
-                if (isUnaryMinus(expression.indexOf(token)))
+                val prevToken = expression.getOrNull(expression.indexOf(token) - 1)
+                if (isUnaryMinus(token, prevToken))
                     opStack.push(Operators.UnaryMinus.denotation)
                 else opStack.push(token)
             }
@@ -96,34 +95,22 @@ class ShuntingYardParser : Parser {
 
 
     /*
-    * Removes operators from opStack and appends them to postfix until target operator i met.
+    * Removes operators from opStack and appends them to postfix until targetOp operator i met.
     * Target operator is not removed from opStack.
     * */
-    fun popUntil(target: Operators) {
-        while (opStack.isNotEmpty()) {
-            val op = opStack.peek()
-            if (op.isOperator(target)) break
-            else postfix += opStack.pop()
+    private fun popUntil(from: Stack<String>, to: MutableList<String>, targetOp: Operators) {
+        while (from.isNotEmpty()) {
+            val op = from.peek()
+            if (op.isOperator(targetOp)) break
+            else to += from.pop()
         }
     }
 
-    /**/
-    private fun isUnaryMinus(tokenInd: Int): Boolean {
+    private fun isUnaryMinus(token: String, prevToken: String?): Boolean {
         /*
         * It`s not unary minus if it isn`t a minus operator.
         * */
-        if (Operators.map[expression[tokenInd]] != Operators.Subtraction) return false
-        val previousTokenInd = tokenInd - 1
-        return if (previousTokenInd >= 0) {
-            val prevToken = expression[previousTokenInd]
-            /*
-            * It`s unary minus if it`s minus & first token after parentheses
-            * */
-            prevToken.isOperator(Operators.ParenthesesLeft)
-        }
-        /*
-        * It`s unary minus if it`s minus & first token in expression
-        * */
-        else true
+        if (!token.isOperator(Operators.Subtraction)) return false
+        return prevToken?.isOperator(Operators.ParenthesesLeft) ?: true
     }
 }
