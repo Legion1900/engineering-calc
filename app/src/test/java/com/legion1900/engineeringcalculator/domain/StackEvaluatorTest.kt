@@ -1,7 +1,7 @@
 package com.legion1900.engineeringcalculator.domain
 
-import com.legion1900.engineeringcalculator.domain.interactors.calculator.impl.ShuntingYardParser
-import com.legion1900.engineeringcalculator.domain.interactors.calculator.impl.StackEvaluator
+import com.legion1900.engineeringcalculator.domain.calculator.impl.ShuntingYardParser
+import com.legion1900.engineeringcalculator.domain.calculator.impl.StackEvaluator
 import org.junit.Assert.assertEquals
 import org.junit.Before
 
@@ -35,14 +35,16 @@ class StackEvaluatorTest {
     @Before
     fun initPostfix() {
         postfix = mutableMapOf()
-        val parser = ShuntingYardParser()
+        val parser =
+            ShuntingYardParser()
         for (pair in testValues)
             postfix[pair.key] = parser.toPostfix(pair.key)
     }
 
     @Test
     fun evaluate_isCorrect() {
-        val eval = StackEvaluator()
+        val eval =
+            StackEvaluator()
         for (exp in postfix) {
             assertEquals(
                 "${exp.key} => ${exp.value}, result = ${eval.evaluate(exp.value)

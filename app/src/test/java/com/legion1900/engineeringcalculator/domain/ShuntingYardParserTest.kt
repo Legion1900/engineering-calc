@@ -1,6 +1,6 @@
 package com.legion1900.engineeringcalculator.domain
 
-import com.legion1900.engineeringcalculator.domain.interactors.calculator.impl.ShuntingYardParser
+import com.legion1900.engineeringcalculator.domain.calculator.impl.ShuntingYardParser
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.lang.StringBuilder
@@ -35,7 +35,8 @@ class ShuntingYardParserTest {
 
     @Test
     fun toPostfix_isCorrect() {
-        val parser = ShuntingYardParser()
+        val parser =
+            ShuntingYardParser()
         for (pair in toPostfixValues)
             assertEquals("Input: ${pair.key}", pair.value, toString(parser.toPostfix(pair.key)))
     }

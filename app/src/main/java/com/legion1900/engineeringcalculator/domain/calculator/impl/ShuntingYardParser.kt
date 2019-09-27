@@ -1,6 +1,6 @@
-package com.legion1900.engineeringcalculator.domain.interactors.calculator.impl
+package com.legion1900.engineeringcalculator.domain.calculator.impl
 
-import com.legion1900.engineeringcalculator.domain.interactors.calculator.base.Parser
+import com.legion1900.engineeringcalculator.domain.calculator.base.Parser
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.isUnaryMinus
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperand
@@ -14,7 +14,8 @@ const val SEPARATOR = " "
 /*
 * Partial implementation of shunting-yard algorithm.
 * */
-class ShuntingYardParser : Parser {
+class ShuntingYardParser :
+    Parser {
 
     override fun toPostfix(exp: String): List<String> {
         val expression = exp.split(SEPARATOR)
