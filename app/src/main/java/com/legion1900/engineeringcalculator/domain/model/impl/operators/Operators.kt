@@ -79,3 +79,14 @@ val String.isOperand: Boolean
 
 fun String.isOperator(op: Operators) =
     Operators.map[this] == op
+
+fun isUnaryMinus(token: String, prevToken: String?): Boolean {
+    /*
+    * It`s not unary minus if it isn`t a minus operator.
+    * */
+    if (!token.isOperator(Operators.Subtraction)) return false
+    /*
+    * If previous operator exists check if it`s left scope else return false
+    * */
+    return prevToken?.isOperator(Operators.ParenthesesLeft) ?: true
+}
