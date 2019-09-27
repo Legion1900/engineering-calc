@@ -15,6 +15,8 @@ const val SEPARATOR = " "
 * Partial implementation of shunting-yard algorithm.
 * */
 class ShuntingYardParser : Parser {
+//    TODO: make those properties method variables again
+//    (if one object of this class is used by couple of threads toPostfix result won`t be correct)
     private val expression = mutableListOf<String>()
     private val opStack = Stack<String>()
     private val postfix = mutableListOf<String>()
@@ -105,13 +107,14 @@ class ShuntingYardParser : Parser {
         }
     }
 
+    /**/
     private fun isUnaryMinus(tokenInd: Int): Boolean {
         /*
         * It`s not unary minus if it isn`t a minus operator.
         * */
         if (Operators.map[expression[tokenInd]] != Operators.Subtraction) return false
         val previousTokenInd = tokenInd - 1
-        return if (previousTokenInd > 0) {
+        return if (previousTokenInd >= 0) {
             val prevToken = expression[previousTokenInd]
             /*
             * It`s unary minus if it`s minus & first token after parentheses
