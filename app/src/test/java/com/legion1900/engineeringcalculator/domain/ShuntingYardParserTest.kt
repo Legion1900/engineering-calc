@@ -28,7 +28,9 @@ class ShuntingYardParserTest {
 //        Testing function with arbitrary args number
         "pow ( cos ( pow ( A , B ) ) , sin ( A + B ) )" to "A B pow cos A B + sin pow",
         "C * pow ( B , P )" to "C B P pow *",
-        "sqrt ( pow ( A + B , C * P ) )" to "A B + C P * pow sqrt"
+        "sqrt ( pow ( A + B , C * P ) )" to "A B + C P * pow sqrt",
+        "123.123 * pow ( sin ( 0.123 ) , 3 )" to "123.123 0.123 sin 3 pow *",
+        "2 + 5" to "2 5 +"
     )
 
     @Test

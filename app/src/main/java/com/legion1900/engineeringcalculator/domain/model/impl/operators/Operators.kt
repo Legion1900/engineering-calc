@@ -7,7 +7,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-//TODO: add coma operator for parameter separation
+//TODO: for convert BigDecimal to radians for trigonometric functions!
 /*
 * Enum of supported operations and their denotations
 * */
