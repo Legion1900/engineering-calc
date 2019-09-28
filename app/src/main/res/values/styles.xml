@@ -9,7 +9,19 @@
     </style>
 
     <style name="NumPadButtons" parent="@style/Widget.AppCompat.Button.Borderless">
+<!--        <item name="android:layout_width">56dp</item>-->
+<!--        <item name="android:layout_height">56dp</item>-->
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="layout_columnWeight">1</item>
+        <item name="layout_rowWeight">1</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/numpad_button</item>
+    </style>
+
+    <style name="NumPad">
+        <item name="android:background">@color/bg_numpad</item>
     </style>
 
 </resources>
