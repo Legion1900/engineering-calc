@@ -29,10 +29,6 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left / right
     }),
 
-    ToPower(object : BinAbstractOperator("^", Precedence.Multiplicative.ordinal) {
-        override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left / right
-    }),
-
     UnaryMinus(object : UnaryAbstractOperator("unaryMin") {
         override fun execute(arg: BigDecimal): BigDecimal = -arg
     }),
