@@ -1,7 +1,8 @@
-package com.legion1900.engineeringcalculator
+package com.legion1900.engineeringcalculator.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.legion1900.engineeringcalculator.R
 
 class MainActivity : AppCompatActivity() {
 
