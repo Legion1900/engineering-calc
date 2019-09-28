@@ -7,13 +7,28 @@
     tools:context=".view.MainActivity">
 
     <fragment
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         android:id="@+id/numpad_main"
-        android:name="com.legion1900.engineeringcalculator.view.fragments.MainNumpadFragment"
+        android:name="com.legion1900.engineeringcalculator.view.fragments.NumpadFragment"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        app:layout_constraintVertical_bias="1"
+        android:layout_height="350dp"
+        app:layout_constraintHorizontal_weight="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/base_ops"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/base_ops"
+        android:name="com.legion1900.engineeringcalculator.view.fragments.BaseOperatorsFragment"
+        android:layout_width="0dp"
+        android:layout_height="350dp"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/numpad_main"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
