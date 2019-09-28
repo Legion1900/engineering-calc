@@ -8,7 +8,6 @@ import java.math.MathContext
 import java.util.*
 
 // TODO: create intermediate class that will hold postfix expression if form of two stacks (op&operand)
-//TODO: add precision and round it up
 // (because otherwise I`m doing same work of 'reading' string tokens!)
 class StackEvaluator(override val precision: Int = 32) :
     Evaluator {

@@ -8,7 +8,6 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-//TODO: for convert BigDecimal to radians for trigonometric functions!
 /*
 * Enum of supported operations and their denotations
 * */
@@ -40,12 +39,12 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
 
     Sinus(object : UnaryAbstractFunction("sin") {
         override fun execute(arg: BigDecimal): BigDecimal =
-            BigDecimal(sin(degreeToRadians(arg).toDouble()))
+            BigDecimal(sin(arg.degreeToRadians().toDouble()))
     }),
 
     Cosine(object : UnaryAbstractFunction("cos") {
         override fun execute(arg: BigDecimal): BigDecimal =
-            BigDecimal(cos(degreeToRadians(arg).toDouble()))
+            BigDecimal(cos(arg.degreeToRadians().toDouble()))
     }),
 
     SquareRoot(object : UnaryAbstractFunction("sqrt") {
@@ -94,4 +93,4 @@ fun isUnaryMinus(token: String, prevToken: String?): Boolean {
     return prevToken?.isOperator(Operators.ParenthesesLeft) ?: true
 }
 
-fun degreeToRadians(degree: BigDecimal): BigDecimal = degree * BigDecimal(PI) / BigDecimal(180)
+fun BigDecimal.degreeToRadians(): BigDecimal = this * BigDecimal(PI) / BigDecimal(180)
