@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="background">#222D59</color>
     <color name="bg_numpad">#171531</color>
     <color name="button_pressed">#403B8A</color>
+    <color name="story_text">#E8E8E8</color>
 </resources>
