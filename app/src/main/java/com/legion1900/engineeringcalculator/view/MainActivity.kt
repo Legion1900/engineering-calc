@@ -3,8 +3,10 @@ package com.legion1900.engineeringcalculator.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
 import com.legion1900.engineeringcalculator.R
 import com.legion1900.engineeringcalculator.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,10 +16,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        binding.keyboard.adapter = KeyboardPagerAdapter(supportFragmentManager)
         adjustEditTextSize()
     }
 
-    fun adjustEditTextSize() {
+    private fun adjustEditTextSize() {
         with(binding) {
             etInput.textSize = tvStory.textSize
         }
