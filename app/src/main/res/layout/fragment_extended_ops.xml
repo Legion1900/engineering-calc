@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.gridlayout.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/NumPad"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:columnCount="4"
+    app:rowCount="3">
+
+    <Button
+
+        style="@style/NumPadButtons"
+        android:text="@string/scope_left" />
+
+    <Button
+        style="@style/NumPadButtons"
+        android:text="@string/scope_right" />
+
+    <Button
+        style="@style/NumPadButtons"
+        android:text="@string/func_abs" />
+
+    <Button
+        style="@style/NumPadButtons"
+        android:text="@string/func_pow" />
+
+    <ImageButton
+        style="@style/NumPadButtons"
+        app:srcCompat="@drawable/ic_square_root_56dp" />
+
+
+    <Button
+        style="@style/NumPadButtons"
+        android:text="@string/const_e" />
+
+    <ImageButton
+        style="@style/NumPadButtons"
+        app:srcCompat="@drawable/ic_pi_56dp" />
+
+    <Button
+        style="@style/NumPadButtons"
+        android:text="@string/func_log" />
+
+    <Button style="@style/NumPadButtons"
+        android:text="@string/func_sin"/>
+
+    <Button style="@style/NumPadButtons"
+        android:text="@string/func_cos"/>
+
+    <Button style="@style/NumPadButtons"
+        android:text="@string/func_tan"/>
+
+    <Button style="@style/NumPadButtons"
+        android:text="@string/func_ln"/>
+
+
+
+</androidx.gridlayout.widget.GridLayout>

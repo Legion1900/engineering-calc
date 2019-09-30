@@ -21,4 +21,14 @@
     <string name="subtraction">-</string>
     <string name="division">/</string>
     <string name="clear">C</string>
+    <string name="scope_left">(</string>
+    <string name="scope_right">)</string>
+    <string name="func_abs">|x|</string>
+    <string name="func_log">log</string>
+    <string name="func_sin">sin</string>
+    <string name="func_cos">cos</string>
+    <string name="func_tan">tan</string>
+    <string name="func_ln">ln</string>
+    <string name="const_e">e</string>
+    <string name="func_pow">pow</string>
 </resources>
