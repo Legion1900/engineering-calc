@@ -1,12 +1,16 @@
 package com.legion1900.engineeringcalculator.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
 import com.legion1900.engineeringcalculator.R
 import com.legion1900.engineeringcalculator.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
+import com.legion1900.engineeringcalculator.view.adapters.KeyboardPagerAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,13 +20,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        binding.keyboard.adapter = KeyboardPagerAdapter(supportFragmentManager)
-        adjustEditTextSize()
+        binding.keyboard.adapter =
+            KeyboardPagerAdapter(
+                supportFragmentManager
+            )
+        initInputField()
     }
 
-    private fun adjustEditTextSize() {
+    fun onNumberClick(view: View) {
         with(binding) {
-            etInput.textSize = tvStory.textSize
+            etInput.text.append((view as Button).text)
         }
+    }
+
+    private fun initInputField() {
+        with(binding) {
+            /*
+            * Adjusting font size.
+            * */
+            etInput.textSize = tvStory.textSize
+            etInput.requestFocus()
+//            etInput.setOnTouchListener { view, MotionEvent -> true }
+            etInput.showSoftInputOnFocus = false
+        }
+//        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
     }
 }

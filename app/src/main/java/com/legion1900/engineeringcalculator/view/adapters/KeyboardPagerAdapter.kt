@@ -1,4 +1,4 @@
-package com.legion1900.engineeringcalculator.view
+package com.legion1900.engineeringcalculator.view.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
