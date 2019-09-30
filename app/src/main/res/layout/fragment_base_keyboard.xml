@@ -8,13 +8,9 @@
     app:rowCount="4"
     style="@style/NumPad">
 
-
-    <ImageButton
-        style="@style/NumPadButtons"
-        app:srcCompat="@drawable/ic_switch_layout_white_56dp" />
-
     <Button
         style="@style/NumPadButtons"
+        app:layout_column="1"
         android:text="@string/_7" />
 
     <Button
