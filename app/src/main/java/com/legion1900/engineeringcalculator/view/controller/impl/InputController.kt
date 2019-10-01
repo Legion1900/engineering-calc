@@ -20,7 +20,7 @@ class InputController(editText: EditText) :
 
     override fun printNumber(num: CharSequence) {
         if (
-            previous?.isOperator(Operators.ParenthesesLeft) == true
+            previous?.isOperator(Operators.ParenthesesRight) == false
             || previous?.isOperand == true
             || text.isEmpty()
         ) append(num)
