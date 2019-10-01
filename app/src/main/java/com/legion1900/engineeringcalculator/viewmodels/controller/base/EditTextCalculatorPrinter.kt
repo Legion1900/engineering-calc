@@ -10,8 +10,8 @@ abstract class EditTextCalculatorPrinter(private val editText: EditText) : Calcu
     protected val text: Editable
         get() = editText.text
 
-    protected val previous: String
-        get() = text[carriagePosition - 1].toString()
+    protected val previous: String?
+        get() = text.getOrNull(carriagePosition - 1)?.toString()
 
     /*
     * Move carriage forward.
@@ -40,5 +40,10 @@ abstract class EditTextCalculatorPrinter(private val editText: EditText) : Calcu
     protected fun append(symbol: String) {
         text.append(symbol)
         editText.setSelection(carriagePosition + symbol.length)
+    }
+
+    protected fun append(symbol: String, carriageShift: Int) {
+        text.append(symbol)
+        editText.setSelection(carriagePosition + carriageShift)
     }
 }

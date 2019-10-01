@@ -1,11 +1,11 @@
 package com.legion1900.engineeringcalculator.viewmodels.controller.base
 
 interface CalculatorPrinter {
-    fun printNumber(symbol: String)
+    fun printNumber(num: String)
 
-    fun printOperator(symbol: String)
+    fun printOperator(op: String)
 
-    fun printFunc(symbol: String)
+    fun printFunc(func: String)
 
     fun printSpecial(symbol: String)
 
