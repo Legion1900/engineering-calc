@@ -1,6 +1,7 @@
 package com.legion1900.engineeringcalculator.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -11,10 +12,14 @@ import androidx.databinding.DataBindingUtil
 import com.legion1900.engineeringcalculator.R
 import com.legion1900.engineeringcalculator.databinding.ActivityMainBinding
 import com.legion1900.engineeringcalculator.view.adapters.KeyboardPagerAdapter
+import com.legion1900.engineeringcalculator.view.controller.base.CalculatorPrinter
+import com.legion1900.engineeringcalculator.view.controller.impl.InputController
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+
+    lateinit var printer: CalculatorPrinter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,12 +30,20 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager
             )
         initInputField()
+
+        printer = InputController(binding.etInput)
     }
 
-    fun onNumberClick(view: View) {
-        with(binding) {
-            etInput.text.append((view as Button).text)
-        }
+    fun onNumClick(view: View) {
+        printer.printNumber((view as Button).text)
+    }
+
+    fun onOpClick(view: View) {
+        printer.printOperator((view as Button).text)
+    }
+
+    fun onSpecialClick(view: View) {
+        printer.printSpecial((view as Button).text)
     }
 
     private fun initInputField() {

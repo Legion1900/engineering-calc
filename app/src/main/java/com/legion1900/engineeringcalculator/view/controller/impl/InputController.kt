@@ -16,6 +16,8 @@ class InputController(editText: EditText) :
 
     private var isDotPresent = false
 
+    private var openScopeCnt = 0
+
     private val operators = Operators.map
 
     override fun printNumber(num: CharSequence) {
@@ -51,11 +53,42 @@ class InputController(editText: EditText) :
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun printSpecial(symbol: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    /*
+    * Specials: dor, (, ), constants (e, pi, etc.)
+    * */
+    override fun printSpecial(symbol: CharSequence) {
+        if (symbol == SCOPE_L) printLeftScope()
+        else if (symbol == SCOPE_R) printRightScope()
     }
 
     override fun backspace() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    /*
+    * Can be printed if:
+    * text is empty
+    * or previous symbol is operator (except right parentheses).
+    * */
+    private fun printLeftScope() {
+        if (
+            text.isEmpty()
+            || (previous?.isOperand == false
+                    && previous?.isOperator(Operators.ParenthesesRight) == false)
+                ) {
+            append(SCOPE_L)
+            openScopeCnt++
+        }
+    }
+
+    private fun printRightScope() {
+        if (openScopeCnt == 0) return
+        if (
+            previous?.isOperand == true
+            || previous?.isOperator(Operators.ParenthesesRight) == true
+                ) {
+            append(SCOPE_R)
+            openScopeCnt--
+        }
     }
 }

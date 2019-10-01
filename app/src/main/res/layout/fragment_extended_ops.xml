@@ -10,10 +10,12 @@
     <Button
 
         style="@style/NumPadButtons"
+        android:onClick="onSpecialClick"
         android:text="@string/scope_left" />
 
     <Button
         style="@style/NumPadButtons"
+        android:onClick="onSpecialClick"
         android:text="@string/scope_right" />
 
     <Button

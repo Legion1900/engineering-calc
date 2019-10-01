@@ -7,7 +7,7 @@ interface CalculatorPrinter {
 
     fun printFunc(func: String)
 
-    fun printSpecial(symbol: String)
+    fun printSpecial(symbol: CharSequence)
 
     fun backspace()
 
