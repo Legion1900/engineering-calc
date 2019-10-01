@@ -1,6 +1,7 @@
-package com.legion1900.engineeringcalculator.viewmodels.controller.base
+package com.legion1900.engineeringcalculator.view.controller.base
 
 import android.text.Editable
+import android.util.Log
 import android.widget.EditText
 
 abstract class EditTextCalculatorPrinter(private val editText: EditText) : CalculatorPrinter {
@@ -33,13 +34,15 @@ abstract class EditTextCalculatorPrinter(private val editText: EditText) : Calcu
         return text[carriagePosition - 1] == symbol
     }
 
-    protected fun replacePrevious(value: String) {
-        text.replace(carriagePosition - 1, carriagePosition, value)
+    protected fun replacePrevious(value: CharSequence) {
+        if (carriagePosition != 0)
+            text.replace(carriagePosition - 1, carriagePosition, value)
     }
 
-    protected fun append(symbol: String) {
-        text.append(symbol)
-        editText.setSelection(carriagePosition + symbol.length)
+    protected fun append(symbol: CharSequence) {
+        text.insert(carriagePosition, symbol)
+        Log.d("Test", "Pos: ${carriagePosition} length: ${symbol.length}")
+//        editText.setSelection(carriagePosition + symbol.length)
     }
 
     protected fun append(symbol: String, carriageShift: Int) {
