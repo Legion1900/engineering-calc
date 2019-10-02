@@ -36,6 +36,8 @@ class InputController(editText: EditText) :
         * || previous symbol is right scope
         * => append
         * */
+//        TODO: sign do not swap dot
+//        TODO: forbid paste operations on input field (any except copy)
         if (
             (op.isOperator(Operators.Subtraction) && text.isEmpty())
             || (op.isOperator(Operators.Subtraction)
@@ -44,21 +46,33 @@ class InputController(editText: EditText) :
             || (previous?.isOperator(Operators.ParenthesesRight) == true)
         ) append(op)
         /*
-        * If previous symbol is operator or dot => replace
+        * If previous symbol dot => replace
         * */
-        else if (previous?.isOperand == false || previous?.equals(DOT) == true) replacePrevious(op)
-    }
-
-    override fun printFunc(func: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        else if (previous?.equals(DOT) == true) replacePrevious(op)
     }
 
     /*
-    * Specials: dor, (, ), constants (e, pi, etc.)
+    * func should contain full signature of function:
+    * 1) name
+    * 2) left and right scope
+    * 3) appropriate number of comma separators
     * */
+    override fun printFunc(func: CharSequence) {
+        /*
+        * Carriage should be set after opening scope
+        * */
+        val shiftCursorBy = func.indexOf(SCOPE_L) + 1
+        append(func, shiftCursorBy)
+    }
+
+    /*
+    * Specials: dot, (, ), constants (e, pi, etc.)
+    * */
+//    TODO: constant handling
     override fun printSpecial(symbol: CharSequence) {
         if (symbol == SCOPE_L) printLeftScope()
         else if (symbol == SCOPE_R) printRightScope()
+        else if (symbol == DOT) printDot()
     }
 
     override fun backspace() {
@@ -90,5 +104,31 @@ class InputController(editText: EditText) :
             append(SCOPE_R)
             openScopeCnt--
         }
+    }
+
+    private fun printDot() {
+        /*
+        * Searching dot.
+        * */
+        var isDot = searchForDot(true)
+        if (!isDot) isDot = searchForDot(false)
+        /*
+        * If no dot found and previous symbol is number => append.
+        * */
+        if (!isDot && (previous?.isOperand == true))
+            append(DOT)
+    }
+
+    private fun searchForDot(isFwd: Boolean): Boolean {
+        var isDot = false
+        var i = carriagePosition - 1
+        while (i in text.indices && !isDot) {
+            val symbol = text[i].toString()
+            if (symbol == DOT) isDot = true
+            if (operators.containsKey(symbol)) break
+            if (isFwd) i++
+            else i--
+        }
+        return isDot
     }
 }

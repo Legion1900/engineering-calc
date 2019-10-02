@@ -5,7 +5,7 @@ interface CalculatorPrinter {
 
     fun printOperator(op: CharSequence)
 
-    fun printFunc(func: String)
+    fun printFunc(func: CharSequence)
 
     fun printSpecial(symbol: CharSequence)
 

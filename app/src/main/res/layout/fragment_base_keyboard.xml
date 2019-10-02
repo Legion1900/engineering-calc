@@ -33,7 +33,9 @@
         app:srcCompat="@drawable/ic_backspace_white_56dp" />
 
     <Button
+        android:id="@+id/move_carriage_left"
         style="@style/NumPadButtons"
+        android:onClick="moveCarriage"
         android:text="@string/move_carriage_right" />
 
     <Button
@@ -63,8 +65,10 @@
         android:text="@string/subtraction" />
 
     <Button
-        style="@style/NumPadButtons"
+        android:id="@+id/move_carriage_right"
 
+        style="@style/NumPadButtons"
+        android:onClick="moveCarriage"
         android:text="@string/move_carriage_left" />
 
     <Button
@@ -94,6 +98,7 @@
 
     <Button
         style="@style/NumPadButtons"
+        android:onClick="onSpecialClick"
         android:text="@string/dot"
         app:layout_column="1"
         app:layout_row="3" />

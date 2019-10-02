@@ -41,11 +41,9 @@ abstract class EditTextCalculatorPrinter(private val editText: EditText) : Calcu
 
     protected fun append(symbol: CharSequence) {
         text.insert(carriagePosition, symbol)
-        Log.d("Test", "Pos: ${carriagePosition} length: ${symbol.length}")
-//        editText.setSelection(carriagePosition + symbol.length)
     }
 
-    protected fun append(symbol: String, carriageShift: Int) {
+    protected fun append(symbol: CharSequence, carriageShift: Int) {
         text.append(symbol)
         editText.setSelection(carriagePosition + carriageShift)
     }
