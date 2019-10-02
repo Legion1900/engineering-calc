@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity() {
         printer.printSpecial(symbol)
     }
 
+    fun onBackspaceClick(view: View) {
+        printer.backspace()
+    }
+
     private fun buildFuncSignature(func: Operators): String {
         val builder = StringBuilder(func.denotation)
         builder.append('(')

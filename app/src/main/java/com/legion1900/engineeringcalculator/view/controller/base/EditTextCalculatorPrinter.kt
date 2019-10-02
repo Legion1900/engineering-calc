@@ -15,6 +15,14 @@ abstract class EditTextCalculatorPrinter(private val editText: EditText) : Calcu
         get() = text.getOrNull(carriagePosition - 1)?.toString()
 
     /*
+    * Default behavior for EditText
+    * */
+    override fun backspace() {
+        if (carriagePosition != 0)
+            text.delete(carriagePosition - 1, carriagePosition)
+    }
+
+    /*
     * Move carriage forward.
     * */
     fun moveCarriageFwd() {

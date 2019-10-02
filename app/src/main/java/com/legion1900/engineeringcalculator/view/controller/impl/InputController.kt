@@ -11,11 +11,13 @@ const val SCOPE_L = "("
 const val SCOPE_R = ")"
 const val DOT = "."
 
+//TODO: rewrite all conditions through variables!
+
 class InputController(editText: EditText) :
     EditTextCalculatorPrinter(editText) {
 
     private val isPreviousLetter: Boolean
-        get() = previous?.get(0) in 'a'..'z'
+        get() = isLetter(previous?.get(0))
 
     private var openScopeCnt = 0
 
@@ -57,7 +59,6 @@ class InputController(editText: EditText) :
     * 2) left and right scope
     * 3) appropriate number of comma separators
     * */
-//    TODO: bug with printing functions after constants
     override fun printFunc(func: CharSequence) {
         if (isPreviousLetter) return
         /*
@@ -94,7 +95,34 @@ class InputController(editText: EditText) :
     }
 
     override fun backspace() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        /*
+        * If previous is number, dot or operator
+        * */
+        if (!isPreviousLetter) {
+            if (previous?.isOperator(Operators.ParenthesesRight) == true) {
+                openScopeCnt++
+                super.backspace()
+            }
+            else if (previous?.isOperator(Operators.ParenthesesLeft) == true) {
+                /*
+                * If previous this is usual scope
+                * */
+                if (!isLetter(text[carriagePosition - 2])) {
+                    openScopeCnt--
+                    super.backspace()
+                }
+                /*
+                * If scope is a part of function call
+                * */
+                else {
+                    var start = carriagePosition - 2
+                    while (start > 0 && isLetter(text[start])) start--
+                    var end = carriagePosition + 1
+                    while (end != text.length && text[end - 1] != SCOPE_R[0]) end++
+                    text.delete(start, end)
+                }
+            }
+        }
     }
 
     /*
@@ -113,7 +141,6 @@ class InputController(editText: EditText) :
         }
     }
 
-//    TODO: bug with printing right scope after constants
     private fun printRightScope() {
         if (openScopeCnt == 0) return
         if (
@@ -156,7 +183,9 @@ class InputController(editText: EditText) :
             isPreviousLetter
             || previous?.isOperator(Operators.ParenthesesRight) == true
             || previous?.isOperand == true
-                ) return
+        ) return
         append(symbol)
     }
+
+    private fun isLetter(symbol: Char?) = symbol in 'a'..'z'
 }
