@@ -43,7 +43,7 @@
         <item name="android:background">@null</item>
         <!-- These two are responsible for one-line left scrolling of EditText -->
         <item name="android:maxLines">1</item>
-        <item name="android:inputType">text</item>
+        <item name="android:inputType">textNoSuggestions</item>
     </style>
 
 </resources>
