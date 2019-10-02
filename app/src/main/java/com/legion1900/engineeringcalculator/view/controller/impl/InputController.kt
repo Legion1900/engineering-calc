@@ -36,8 +36,6 @@ class InputController(editText: EditText) :
         * || previous symbol is right scope
         * => append
         * */
-//        TODO: sign do not swap dot
-//        TODO: forbid paste operations on input field (any except copy)
         if (
             (op.isOperator(Operators.Subtraction) && text.isEmpty())
             || (op.isOperator(Operators.Subtraction)
@@ -57,12 +55,24 @@ class InputController(editText: EditText) :
     * 2) left and right scope
     * 3) appropriate number of comma separators
     * */
+//    TODO: fix bug with printing functions after left scope and numbers
     override fun printFunc(func: CharSequence) {
         /*
-        * Carriage should be set after opening scope
+        * Functions can only be printed if:
+        * text is empty
+        * or previous symbol was operator (but not right scope)
         * */
-        val shiftCursorBy = func.indexOf(SCOPE_L) + 1
-        append(func, shiftCursorBy)
+        if (
+            text.isEmpty()
+            || (previous?.isOperand == false
+                    && previous?.isOperator(Operators.ParenthesesRight) == false)
+        ) {
+            /*
+            * Carriage should be set after opening scope
+            * */
+            val shiftCursorBy = func.indexOf(SCOPE_L) + 1
+            append(func, shiftCursorBy)
+        }
     }
 
     /*
@@ -89,7 +99,7 @@ class InputController(editText: EditText) :
             text.isEmpty()
             || (previous?.isOperand == false
                     && previous?.isOperator(Operators.ParenthesesRight) == false)
-                ) {
+        ) {
             append(SCOPE_L)
             openScopeCnt++
         }
@@ -100,7 +110,7 @@ class InputController(editText: EditText) :
         if (
             previous?.isOperand == true
             || previous?.isOperator(Operators.ParenthesesRight) == true
-                ) {
+        ) {
             append(SCOPE_R)
             openScopeCnt--
         }

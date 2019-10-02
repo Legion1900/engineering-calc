@@ -29,13 +29,14 @@
         android:text="@string/clear" />
 
     <ImageButton
+        android:id="@+id/backspace"
         style="@style/NumPadButtons"
         app:srcCompat="@drawable/ic_backspace_white_56dp" />
 
     <Button
         android:id="@+id/move_carriage_left"
         style="@style/NumPadButtons"
-        android:onClick="moveCarriage"
+        android:onClick="onArrowClick"
         android:text="@string/move_carriage_right" />
 
     <Button
@@ -68,7 +69,7 @@
         android:id="@+id/move_carriage_right"
 
         style="@style/NumPadButtons"
-        android:onClick="moveCarriage"
+        android:onClick="onArrowClick"
         android:text="@string/move_carriage_left" />
 
     <Button
