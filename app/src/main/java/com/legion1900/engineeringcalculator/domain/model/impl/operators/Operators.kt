@@ -3,10 +3,7 @@ package com.legion1900.engineeringcalculator.domain.model.impl.operators
 import com.legion1900.engineeringcalculator.domain.model.base.operators.*
 import java.lang.Math.pow
 import java.math.BigDecimal
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /*
 * Enum of supported operations and their denotations
@@ -43,6 +40,21 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
             BigDecimal(cos(arg.degreeToRadians().toDouble()))
     }),
 
+    Tangent(object : UnaryAbstractFunction("tan") {
+        override fun execute(arg: BigDecimal): BigDecimal =
+            BigDecimal(tan(arg.degreeToRadians().toDouble()))
+    }),
+
+    Log(object : UnaryAbstractFunction("log") {
+        override fun execute(arg: BigDecimal): BigDecimal =
+            BigDecimal(log10(arg.toDouble()))
+    }),
+
+    LogN(object : UnaryAbstractFunction("ln") {
+        override fun execute(arg: BigDecimal): BigDecimal =
+            BigDecimal(log(arg.toDouble(), kotlin.math.E))
+    }),
+
     SquareRoot(object : UnaryAbstractFunction("sqrt") {
         override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(sqrt(arg.toDouble()))
     }),
@@ -51,6 +63,14 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
         override fun execute(vararg args: BigDecimal): BigDecimal =
             BigDecimal(pow(args[0].toDouble(), args[1].toDouble()))
     }),
+
+    Absolute(object : UnaryAbstractFunction("abs") {
+        override fun execute(arg: BigDecimal): BigDecimal = arg.abs()
+    }),
+
+    Pi(Constant(BigDecimal(PI), "pi")),
+
+    E(Constant(BigDecimal(kotlin.math.E), "e")),
 
     CommaSeparator(Special(",")),
 
