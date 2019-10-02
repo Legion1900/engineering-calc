@@ -7,9 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.legion1900.engineeringcalculator.R
 import com.legion1900.engineeringcalculator.databinding.ActivityMainBinding
+import com.legion1900.engineeringcalculator.domain.model.base.operators.AbstractFunction
+import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
 import com.legion1900.engineeringcalculator.view.adapters.KeyboardPagerAdapter
 import com.legion1900.engineeringcalculator.view.controller.base.EditTextCalculatorPrinter
 import com.legion1900.engineeringcalculator.view.controller.impl.InputController
+import java.lang.IllegalStateException
+import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,10 +46,40 @@ class MainActivity : AppCompatActivity() {
         printer.printSpecial((view as Button).text)
     }
 
-    fun moveCarriage(view: View) {
+    fun onArrowClick(view: View) {
         if (view.id == R.id.move_carriage_right)
             printer.moveCarriageFwd()
         else printer.moveCarriageBkwd()
+    }
+
+    fun onFuncClick(view: View) {
+        val signature = when (view.id) {
+            R.id.abs -> buildFuncSignature(Operators.Absolute)
+            R.id.pow -> buildFuncSignature(Operators.Power)
+            R.id.sqrt -> buildFuncSignature(Operators.SquareRoot)
+            R.id.log -> buildFuncSignature(Operators.Log)
+            R.id.ln -> buildFuncSignature(Operators.LogN)
+            R.id.sin -> buildFuncSignature(Operators.Sinus)
+            R.id.cos -> buildFuncSignature(Operators.Cosine)
+            R.id.tan -> buildFuncSignature(Operators.Tangent)
+            else -> throw IllegalStateException("Cannot be executed for non-function")
+        }
+        printer.printFunc(signature)
+    }
+
+    private fun buildFuncSignature(func: Operators): String {
+        val builder = StringBuilder(func.denotation)
+        builder.append('(')
+        var i = 0
+        /*
+        * There is arity - 1 comma separators in function signature
+        * */
+        while (i < func.arity - 1) {
+            builder.append(',')
+            i++
+        }
+        builder.append(')')
+        return builder.toString()
     }
 
     private fun initInputField() {
