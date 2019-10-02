@@ -6,9 +6,9 @@ import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperan
 import java.math.BigDecimal
 import java.math.MathContext
 import java.util.*
+//TODO: add Calculator class for handling both parsing and evaluating
+// and Formatter for preparing string input
 
-// TODO: create intermediate class that will hold postfix expression if form of two stacks (op&operand)
-// (because otherwise I`m doing same work of 'reading' string tokens!)
 class StackEvaluator(override val precision: Int = 32) :
     Evaluator {
 

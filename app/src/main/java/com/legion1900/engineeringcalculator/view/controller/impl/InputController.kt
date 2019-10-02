@@ -55,7 +55,6 @@ class InputController(editText: EditText) :
     * 2) left and right scope
     * 3) appropriate number of comma separators
     * */
-//    TODO: fix bug with printing functions after left scope and numbers
     override fun printFunc(func: CharSequence) {
         /*
         * Functions can only be printed if:
