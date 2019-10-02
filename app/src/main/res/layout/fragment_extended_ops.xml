@@ -40,11 +40,13 @@
     <Button
         android:id="@+id/e"
         style="@style/NumPadButtons"
+        android:onClick="onConstClick"
         android:text="@string/const_e" />
 
     <ImageButton
         android:id="@+id/pi"
         style="@style/NumPadButtons"
+        android:onClick="onConstClick"
         app:srcCompat="@drawable/ic_pi_56dp" />
 
     <Button

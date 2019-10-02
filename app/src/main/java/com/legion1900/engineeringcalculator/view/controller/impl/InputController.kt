@@ -14,13 +14,15 @@ const val DOT = "."
 class InputController(editText: EditText) :
     EditTextCalculatorPrinter(editText) {
 
-    private var isDotPresent = false
+    private val isPreviousLetter: Boolean
+        get() = previous?.get(0) in 'a'..'z'
 
     private var openScopeCnt = 0
 
     private val operators = Operators.map
 
     override fun printNumber(num: CharSequence) {
+        if (isPreviousLetter) return
         if (
             previous?.isOperator(Operators.ParenthesesRight) == false
             || previous?.isOperand == true
@@ -55,7 +57,9 @@ class InputController(editText: EditText) :
     * 2) left and right scope
     * 3) appropriate number of comma separators
     * */
+//    TODO: bug with printing functions after constants
     override fun printFunc(func: CharSequence) {
+        if (isPreviousLetter) return
         /*
         * Functions can only be printed if:
         * text is empty
@@ -77,11 +81,16 @@ class InputController(editText: EditText) :
     /*
     * Specials: dot, (, ), constants (e, pi, etc.)
     * */
-//    TODO: constant handling
     override fun printSpecial(symbol: CharSequence) {
-        if (symbol == SCOPE_L) printLeftScope()
-        else if (symbol == SCOPE_R) printRightScope()
-        else if (symbol == DOT) printDot()
+        when (symbol) {
+            SCOPE_L -> printLeftScope()
+            SCOPE_R -> printRightScope()
+            DOT -> printDot()
+            /*
+            * Constants
+            * */
+            else -> printConst(symbol)
+        }
     }
 
     override fun backspace() {
@@ -104,6 +113,7 @@ class InputController(editText: EditText) :
         }
     }
 
+//    TODO: bug with printing right scope after constants
     private fun printRightScope() {
         if (openScopeCnt == 0) return
         if (
@@ -139,5 +149,14 @@ class InputController(editText: EditText) :
             else i--
         }
         return isDot
+    }
+
+    private fun printConst(symbol: CharSequence) {
+        if (
+            isPreviousLetter
+            || previous?.isOperator(Operators.ParenthesesRight) == true
+            || previous?.isOperand == true
+                ) return
+        append(symbol)
     }
 }

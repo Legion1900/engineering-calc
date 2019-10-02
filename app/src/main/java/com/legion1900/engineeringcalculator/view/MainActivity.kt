@@ -7,13 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.legion1900.engineeringcalculator.R
 import com.legion1900.engineeringcalculator.databinding.ActivityMainBinding
-import com.legion1900.engineeringcalculator.domain.model.base.operators.AbstractFunction
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
 import com.legion1900.engineeringcalculator.view.adapters.KeyboardPagerAdapter
 import com.legion1900.engineeringcalculator.view.controller.base.EditTextCalculatorPrinter
 import com.legion1900.engineeringcalculator.view.controller.impl.InputController
-import java.lang.IllegalStateException
-import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -65,6 +62,15 @@ class MainActivity : AppCompatActivity() {
             else -> throw IllegalStateException("Cannot be executed for non-function")
         }
         printer.printFunc(signature)
+    }
+
+    fun onConstClick(view: View) {
+        val symbol = when (view.id) {
+            R.id.e -> Operators.E.denotation
+            R.id.pi -> Operators.Pi.denotation
+            else -> throw IllegalStateException("Cannot be executed for non-constant")
+        }
+        printer.printSpecial(symbol)
     }
 
     private fun buildFuncSignature(func: Operators): String {
