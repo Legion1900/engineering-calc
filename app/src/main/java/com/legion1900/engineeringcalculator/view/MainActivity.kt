@@ -77,6 +77,10 @@ class MainActivity : AppCompatActivity() {
         printer.backspace()
     }
 
+    fun onClearClick(view: View) {
+        printer.clear()
+    }
+
     private fun buildFuncSignature(func: Operators): String {
         val builder = StringBuilder(func.denotation)
         builder.append('(')

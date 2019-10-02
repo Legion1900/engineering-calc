@@ -6,7 +6,6 @@ import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperan
 import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperator
 import com.legion1900.engineeringcalculator.view.controller.base.EditTextCalculatorPrinter
 
-const val ZERO = "0"
 const val SCOPE_L = "("
 const val SCOPE_R = ")"
 const val DOT = "."
@@ -40,6 +39,7 @@ class InputController(editText: EditText) :
         * || previous symbol is right scope
         * => append
         * */
+        if (isPreviousLetter) append(op)
         if (
             (op.isOperator(Operators.Subtraction) && text.isEmpty())
             || (op.isOperator(Operators.Subtraction)
@@ -102,8 +102,7 @@ class InputController(editText: EditText) :
             if (previous?.isOperator(Operators.ParenthesesRight) == true) {
                 openScopeCnt++
                 super.backspace()
-            }
-            else if (previous?.isOperator(Operators.ParenthesesLeft) == true) {
+            } else if (previous?.isOperator(Operators.ParenthesesLeft) == true) {
                 /*
                 * If previous this is usual scope
                 * */
@@ -121,7 +120,15 @@ class InputController(editText: EditText) :
                     while (end != text.length && text[end - 1] != SCOPE_R[0]) end++
                     text.delete(start, end)
                 }
-            }
+            } else super.backspace()
+        }
+        /*
+        * If constant is met
+        * */
+        else {
+            var start = carriagePosition - 2
+            while (start > 0 && isLetter(text[start])) start--
+            text.delete(start, carriagePosition)
         }
     }
 

@@ -26,11 +26,13 @@
 
     <Button
         style="@style/NumPadButtons"
+        android:onClick="onClearClick"
         android:text="@string/clear" />
 
     <ImageButton
         android:id="@+id/backspace"
         style="@style/NumPadButtons"
+        android:onClick="onBackspaceClick"
         app:srcCompat="@drawable/ic_backspace_white_56dp" />
 
     <Button
