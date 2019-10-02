@@ -1,8 +1,8 @@
-package com.legion1900.engineeringcalculator.domain.calculator.impl
+package com.legion1900.engineeringcalculator.logic.calculator.impl
 
-import com.legion1900.engineeringcalculator.domain.calculator.base.Evaluator
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperand
+import com.legion1900.engineeringcalculator.logic.calculator.base.Evaluator
+import com.legion1900.engineeringcalculator.logic.operators.impl.Operators
+import com.legion1900.engineeringcalculator.logic.operators.impl.isOperand
 import java.math.BigDecimal
 import java.math.MathContext
 import java.util.*

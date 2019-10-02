@@ -1,4 +1,4 @@
-package com.legion1900.engineeringcalculator.domain.model.base.operators
+package com.legion1900.engineeringcalculator.logic.operators.base
 
 /*
 * The less value it holds, the higher precedence it is.

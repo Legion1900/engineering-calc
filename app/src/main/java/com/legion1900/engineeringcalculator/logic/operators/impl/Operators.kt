@@ -1,6 +1,6 @@
-package com.legion1900.engineeringcalculator.domain.model.impl.operators
+package com.legion1900.engineeringcalculator.logic.operators.impl
 
-import com.legion1900.engineeringcalculator.domain.model.base.operators.*
+import com.legion1900.engineeringcalculator.logic.operators.base.*
 import java.lang.Math.pow
 import java.math.BigDecimal
 import kotlin.math.*
@@ -74,7 +74,12 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
 
     Pi(Constant(BigDecimal(PI), "pi")),
 
-    E(Constant(BigDecimal(kotlin.math.E), "e")),
+    E(
+        Constant(
+            BigDecimal(kotlin.math.E),
+            "e"
+        )
+    ),
 
     CommaSeparator(Special(",")),
 

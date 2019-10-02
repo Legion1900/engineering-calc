@@ -1,4 +1,4 @@
-package com.legion1900.engineeringcalculator.domain.calculator.base
+package com.legion1900.engineeringcalculator.logic.calculator.base
 
 import java.math.BigDecimal
 

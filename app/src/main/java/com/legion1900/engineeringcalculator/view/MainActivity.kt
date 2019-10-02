@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.legion1900.engineeringcalculator.R
 import com.legion1900.engineeringcalculator.databinding.ActivityMainBinding
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
+import com.legion1900.engineeringcalculator.logic.operators.impl.Operators
 import com.legion1900.engineeringcalculator.view.adapters.KeyboardPagerAdapter
 import com.legion1900.engineeringcalculator.view.controller.base.EditTextCalculatorPrinter
 import com.legion1900.engineeringcalculator.view.controller.impl.InputController

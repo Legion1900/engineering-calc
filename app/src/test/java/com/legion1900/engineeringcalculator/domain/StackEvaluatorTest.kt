@@ -1,7 +1,7 @@
 package com.legion1900.engineeringcalculator.domain
 
-import com.legion1900.engineeringcalculator.domain.calculator.impl.ShuntingYardParser
-import com.legion1900.engineeringcalculator.domain.calculator.impl.StackEvaluator
+import com.legion1900.engineeringcalculator.logic.calculator.impl.ShuntingYardParser
+import com.legion1900.engineeringcalculator.logic.calculator.impl.StackEvaluator
 import org.junit.Assert.assertEquals
 import org.junit.Before
 

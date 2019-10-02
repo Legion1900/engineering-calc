@@ -1,10 +1,10 @@
-package com.legion1900.engineeringcalculator.domain.calculator.impl
+package com.legion1900.engineeringcalculator.logic.calculator.impl
 
-import com.legion1900.engineeringcalculator.domain.calculator.base.Parser
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.isUnaryMinus
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperand
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperator
+import com.legion1900.engineeringcalculator.logic.calculator.base.Parser
+import com.legion1900.engineeringcalculator.logic.operators.impl.isUnaryMinus
+import com.legion1900.engineeringcalculator.logic.operators.impl.Operators
+import com.legion1900.engineeringcalculator.logic.operators.impl.isOperand
+import com.legion1900.engineeringcalculator.logic.operators.impl.isOperator
 import java.util.*
 
 const val SEPARATOR = " "

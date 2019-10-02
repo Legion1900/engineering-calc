@@ -1,9 +1,9 @@
 package com.legion1900.engineeringcalculator.view.controller.impl
 
 import android.widget.EditText
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.Operators
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperand
-import com.legion1900.engineeringcalculator.domain.model.impl.operators.isOperator
+import com.legion1900.engineeringcalculator.logic.operators.impl.Operators
+import com.legion1900.engineeringcalculator.logic.operators.impl.isOperand
+import com.legion1900.engineeringcalculator.logic.operators.impl.isOperator
 import com.legion1900.engineeringcalculator.view.controller.base.EditTextCalculatorPrinter
 
 const val SCOPE_L = "("

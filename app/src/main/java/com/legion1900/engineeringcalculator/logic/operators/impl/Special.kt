@@ -1,7 +1,7 @@
-package com.legion1900.engineeringcalculator.domain.model.impl.operators
+package com.legion1900.engineeringcalculator.logic.operators.impl
 
-import com.legion1900.engineeringcalculator.domain.model.base.operators.AbstractOperator
-import com.legion1900.engineeringcalculator.domain.model.base.operators.Precedence
+import com.legion1900.engineeringcalculator.logic.operators.base.AbstractOperator
+import com.legion1900.engineeringcalculator.logic.operators.base.Precedence
 import java.math.BigDecimal
 
 /*
