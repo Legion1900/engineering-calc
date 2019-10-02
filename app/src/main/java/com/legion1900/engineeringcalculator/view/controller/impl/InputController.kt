@@ -10,13 +10,17 @@ const val SCOPE_L = "("
 const val SCOPE_R = ")"
 const val DOT = "."
 
-//TODO: rewrite all conditions through variables!
-
 class InputController(editText: EditText) :
     EditTextCalculatorPrinter(editText) {
 
     private val isPreviousLetter: Boolean
         get() = isLetter(previous?.get(0))
+
+    private val isPrevOperand: Boolean
+        get() = previous?.isOperand == true
+
+    private val isPrevRightScope: Boolean
+        get() = previous?.isOperator(Operators.ParenthesesRight) == true
 
     private var openScopeCnt = 0
 
@@ -24,11 +28,8 @@ class InputController(editText: EditText) :
 
     override fun printNumber(num: CharSequence) {
         if (isPreviousLetter) return
-        if (
-            previous?.isOperator(Operators.ParenthesesRight) == false
-            || previous?.isOperand == true
-            || text.isEmpty()
-        ) append(num)
+        val isPrevNotRightScope: Boolean = previous?.isOperator(Operators.ParenthesesRight) == false
+        if (isPrevNotRightScope || isPrevOperand || carriagePosition == 0) append(num)
     }
 
     override fun printOperator(op: CharSequence) {
@@ -39,18 +40,18 @@ class InputController(editText: EditText) :
         * || previous symbol is right scope
         * => append
         * */
-        if (isPreviousLetter) append(op)
-        if (
-            (op.isOperator(Operators.Subtraction) && text.isEmpty())
-            || (op.isOperator(Operators.Subtraction)
-                    && (previous?.isOperator(Operators.ParenthesesLeft) == true))
-            || (previous?.isOperand == true)
-            || (previous?.isOperator(Operators.ParenthesesRight) == true)
-        ) append(op)
+        if (isPreviousLetter) {
+            append(op)
+            return
+        }
+        val isUnaryMinus: Boolean = (op.isOperator(Operators.Subtraction) && text.isEmpty())
+                || (op.isOperator(Operators.Subtraction)
+                && (previous?.isOperator(Operators.ParenthesesLeft) == true))
+        if (isUnaryMinus || isPrevOperand || isPrevRightScope) append(op)
         /*
         * If previous symbol dot => replace
         * */
-        else if (previous?.equals(DOT) == true) replacePrevious(op)
+//        else if (previous?.equals(DOT) == true) replacePrevious(op)
     }
 
     /*
@@ -63,14 +64,13 @@ class InputController(editText: EditText) :
         if (isPreviousLetter) return
         /*
         * Functions can only be printed if:
-        * text is empty
+        * carriage at 0
         * or previous symbol was operator (but not right scope)
         * */
-        if (
-            text.isEmpty()
-            || (previous?.isOperand == false
-                    && previous?.isOperator(Operators.ParenthesesRight) == false)
-        ) {
+        val isPrevOperator = !isPrevOperand
+        val isPrevNotRightScope = !isPrevRightScope
+        val prevCondition: Boolean = isPrevOperator && isPrevNotRightScope
+        if (carriagePosition == 0 || prevCondition) {
             /*
             * Carriage should be set after opening scope
             * */
@@ -99,12 +99,13 @@ class InputController(editText: EditText) :
         * If previous is number, dot or operator
         * */
         if (!isPreviousLetter) {
-            if (previous?.isOperator(Operators.ParenthesesRight) == true) {
+            val isPrevLeftScope: Boolean = previous?.isOperator(Operators.ParenthesesLeft) == true
+            if (isPrevRightScope) {
                 openScopeCnt++
                 super.backspace()
-            } else if (previous?.isOperator(Operators.ParenthesesLeft) == true) {
+            } else if (isPrevLeftScope) {
                 /*
-                * If previous this is usual scope
+                * If previous is usual scope
                 * */
                 if (!isLetter(text[carriagePosition - 2])) {
                     openScopeCnt--
@@ -134,15 +135,12 @@ class InputController(editText: EditText) :
 
     /*
     * Can be printed if:
-    * text is empty
+    * carriage at 0
     * or previous symbol is operator (except right parentheses).
     * */
     private fun printLeftScope() {
-        if (
-            text.isEmpty()
-            || (previous?.isOperand == false
-                    && previous?.isOperator(Operators.ParenthesesRight) == false)
-        ) {
+        val prevCondition: Boolean = !isPrevOperand && !isPrevRightScope
+        if (carriagePosition == 0 || prevCondition) {
             append(SCOPE_L)
             openScopeCnt++
         }
@@ -150,10 +148,8 @@ class InputController(editText: EditText) :
 
     private fun printRightScope() {
         if (openScopeCnt == 0) return
-        if (
-            previous?.isOperand == true
-            || previous?.isOperator(Operators.ParenthesesRight) == true
-        ) {
+        val prevCondition: Boolean = isPrevOperand || isPrevRightScope
+        if (prevCondition) {
             append(SCOPE_R)
             openScopeCnt--
         }
@@ -186,11 +182,7 @@ class InputController(editText: EditText) :
     }
 
     private fun printConst(symbol: CharSequence) {
-        if (
-            isPreviousLetter
-            || previous?.isOperator(Operators.ParenthesesRight) == true
-            || previous?.isOperand == true
-        ) return
+        if (isPreviousLetter || isPrevRightScope || isPrevOperand) return
         append(symbol)
     }
 
