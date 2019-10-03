@@ -29,15 +29,15 @@ class ShuntingYardParser :
             /*
             * If token is a left parentheses push it to opStack
             * */
-            else if (token.isOperator(Operators.ParenthesesLeft)) opStack.push(token)
+            else if (token.isOperator(Operators.PARENTHESES_LEFT)) opStack.push(token)
             /*
             * If token is a right parentheses OR a comma separator:
             * opStack.pop => postfix until ')' is met.
             * */
-            else if (token.isOperator(Operators.ParenthesesRight)) {
+            else if (token.isOperator(Operators.PARENTHESES_RIGHT)) {
 //                while (opStack.isNotEmpty()) {
 //                    val op = opStack.pop()
-//                    if (op.isOperator(Operators.ParenthesesLeft)) break
+//                    if (op.isOperator(Operators.`PARENTHESES_LEFT`)) break
 //                    else postfix += op
 //                }
                 popUntilLeftScope(opStack, postfix)
@@ -46,7 +46,7 @@ class ShuntingYardParser :
             /*
             * Comma separator case: opStack.pop => postfix until left parentheses is met.
             * */
-            else if (token.isOperator(Operators.CommaSeparator)) popUntilLeftScope(
+            else if (token.isOperator(Operators.COMMA_SEPARATOR)) popUntilLeftScope(
                 opStack,
                 postfix
             )
@@ -63,10 +63,10 @@ class ShuntingYardParser :
                 while (opStack.isNotEmpty()) {
                     val op = opStack.peek()
                     /*
-                    * In this implementation parentheses are Special but still Operators.
-                    * Special operators should not be present in postfix.
+                    * In this implementation parentheses are SPECIAL but still Operators.
+                    * SPECIAL operators should not be present in postfix.
                     * */
-                    if (op.isOperator(Operators.ParenthesesLeft)) break
+                    if (op.isOperator(Operators.PARENTHESES_LEFT)) break
                     val tokenPrecedence = operators.getValue(token).precedence
                     val opPrecedence = operators.getValue(op).precedence
                     if (opPrecedence <= tokenPrecedence) postfix += opStack.pop()
@@ -82,7 +82,7 @@ class ShuntingYardParser :
                         prevToken
                     )
                 )
-                    opStack.push(Operators.UnaryMinus.denotation)
+                    opStack.push(Operators.UNARY_MINUS.denotation)
                 else opStack.push(token)
             }
         }
@@ -103,7 +103,7 @@ class ShuntingYardParser :
     private fun popUntilLeftScope(from: Stack<String>, to: MutableList<String>) {
         while (from.isNotEmpty()) {
             val op = from.peek()
-            if (op.isOperator(Operators.ParenthesesLeft)) break
+            if (op.isOperator(Operators.PARENTHESES_LEFT)) break
             else to += from.pop()
         }
     }

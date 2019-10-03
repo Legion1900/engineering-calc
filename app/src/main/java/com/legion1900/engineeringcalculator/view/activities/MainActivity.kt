@@ -55,14 +55,14 @@ class MainActivity : AppCompatActivity() {
 
     fun onFuncClick(view: View) {
         val signature = when (view.id) {
-            R.id.abs -> buildFuncSignature(Operators.Absolute)
-            R.id.pow -> buildFuncSignature(Operators.Power)
-            R.id.sqrt -> buildFuncSignature(Operators.SquareRoot)
-            R.id.log -> buildFuncSignature(Operators.Log)
-            R.id.ln -> buildFuncSignature(Operators.LogN)
-            R.id.sin -> buildFuncSignature(Operators.Sinus)
-            R.id.cos -> buildFuncSignature(Operators.Cosine)
-            R.id.tan -> buildFuncSignature(Operators.Tangent)
+            R.id.abs -> buildFuncSignature(Operators.ABSOLUTE)
+            R.id.pow -> buildFuncSignature(Operators.POWER)
+            R.id.sqrt -> buildFuncSignature(Operators.SQUARE_ROOT)
+            R.id.log -> buildFuncSignature(Operators.LOG)
+            R.id.ln -> buildFuncSignature(Operators.LOG_N)
+            R.id.sin -> buildFuncSignature(Operators.SINUS)
+            R.id.cos -> buildFuncSignature(Operators.COSINE)
+            R.id.tan -> buildFuncSignature(Operators.TANGENT)
             else -> throw IllegalStateException("Cannot be executed for non-function")
         }
         printer.printFunc(signature)
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     fun onConstClick(view: View) {
         val symbol = when (view.id) {
             R.id.e -> Operators.E.denotation
-            R.id.pi -> Operators.Pi.denotation
+            R.id.pi -> Operators.PI.denotation
             else -> throw IllegalStateException("Cannot be executed for non-constant")
         }
         printer.printSpecial(symbol)

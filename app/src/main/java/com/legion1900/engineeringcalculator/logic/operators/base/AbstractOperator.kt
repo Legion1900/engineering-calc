@@ -25,7 +25,7 @@ abstract class BinAbstractOperator(denotation: String, precedence: Int):
 * Interface that represents unary operator.
 * */
 abstract class UnaryAbstractOperator(denotation: String) :
-    AbstractOperator(1, denotation, Precedence.Unary.ordinal) {
+    AbstractOperator(1, denotation, Precedence.UNARY.ordinal) {
 
     override fun execute(vararg args: BigDecimal): BigDecimal = execute(args[0])
 

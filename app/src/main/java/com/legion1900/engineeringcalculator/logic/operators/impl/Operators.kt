@@ -10,69 +10,69 @@ import kotlin.math.*
 * */
 enum class Operators(operation: AbstractOperator) : Operator by operation {
 
-    Summation(object : BinAbstractOperator("+", Precedence.Additive.ordinal) {
+    SUMMATION(object : BinAbstractOperator("+", Precedence.ADDITIVE.ordinal) {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left + right
     }),
 
-    Subtraction(object : BinAbstractOperator("-", Precedence.Additive.ordinal) {
+    SUBTRACTION(object : BinAbstractOperator("-", Precedence.ADDITIVE.ordinal) {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left - right
     }),
 
-    Multiplication(object : BinAbstractOperator("*", Precedence.Multiplicative.ordinal) {
+    MULTIPLICATION(object : BinAbstractOperator("*", Precedence.MULTIPLICATIVE.ordinal) {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left * right
     }),
 
-    Division(object : BinAbstractOperator("/", Precedence.Multiplicative.ordinal) {
+    DIVISION(object : BinAbstractOperator("/", Precedence.MULTIPLICATIVE.ordinal) {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left / right
     }),
 
-    Remainder(object : BinAbstractOperator("%", Precedence.Multiplicative.ordinal) {
+    REMAINDER(object : BinAbstractOperator("%", Precedence.MULTIPLICATIVE.ordinal) {
         override fun execute(left: BigDecimal, right: BigDecimal): BigDecimal = left.rem(right)
     }),
 
-    UnaryMinus(object : UnaryAbstractOperator("unaryMin") {
+    UNARY_MINUS(object : UnaryAbstractOperator("unaryMin") {
         override fun execute(arg: BigDecimal): BigDecimal = -arg
     }),
 
-    Sinus(object : UnaryAbstractFunction("sin") {
+    SINUS(object : UnaryAbstractFunction("sin") {
         override fun execute(arg: BigDecimal): BigDecimal =
             BigDecimal(sin(arg.degreeToRadians().toDouble()))
     }),
 
-    Cosine(object : UnaryAbstractFunction("cos") {
+    COSINE(object : UnaryAbstractFunction("cos") {
         override fun execute(arg: BigDecimal): BigDecimal =
             BigDecimal(cos(arg.degreeToRadians().toDouble()))
     }),
 
-    Tangent(object : UnaryAbstractFunction("tan") {
+    TANGENT(object : UnaryAbstractFunction("tan") {
         override fun execute(arg: BigDecimal): BigDecimal =
             BigDecimal(tan(arg.degreeToRadians().toDouble()))
     }),
 
-    Log(object : UnaryAbstractFunction("log") {
+    LOG(object : UnaryAbstractFunction("log") {
         override fun execute(arg: BigDecimal): BigDecimal =
             BigDecimal(log10(arg.toDouble()))
     }),
 
-    LogN(object : UnaryAbstractFunction("ln") {
+    LOG_N(object : UnaryAbstractFunction("ln") {
         override fun execute(arg: BigDecimal): BigDecimal =
             BigDecimal(log(arg.toDouble(), kotlin.math.E))
     }),
 
-    SquareRoot(object : UnaryAbstractFunction("sqrt") {
+    SQUARE_ROOT(object : UnaryAbstractFunction("sqrt") {
         override fun execute(arg: BigDecimal): BigDecimal = BigDecimal(sqrt(arg.toDouble()))
     }),
 
-    Power(object : AbstractFunction(2, "pow") {
+    POWER(object : AbstractFunction(2, "pow") {
         override fun execute(vararg args: BigDecimal): BigDecimal =
             BigDecimal(pow(args[0].toDouble(), args[1].toDouble()))
     }),
 
-    Absolute(object : UnaryAbstractFunction("abs") {
+    ABSOLUTE(object : UnaryAbstractFunction("abs") {
         override fun execute(arg: BigDecimal): BigDecimal = arg.abs()
     }),
 
-    Pi(Constant(BigDecimal(PI), "pi")),
+    PI(Constant(BigDecimal(kotlin.math.PI), "pi")),
 
     E(
         Constant(
@@ -81,11 +81,11 @@ enum class Operators(operation: AbstractOperator) : Operator by operation {
         )
     ),
 
-    CommaSeparator(Special(",")),
+    COMMA_SEPARATOR(Special(",")),
 
-    ParenthesesLeft(Special("(")),
+    PARENTHESES_LEFT(Special("(")),
 
-    ParenthesesRight(Special(")"));
+    PARENTHESES_RIGHT(Special(")"));
 
 //    -----------------------------------------------------------------------------------------
 
@@ -111,11 +111,11 @@ fun isUnaryMinus(token: String, prevToken: String?): Boolean {
     /*
     * It`s not unary minus if it isn`t a minus operator.
     * */
-    if (!token.isOperator(Operators.Subtraction)) return false
+    if (!token.isOperator(Operators.SUBTRACTION)) return false
     /*
     * If previous operator exists check if it`s left scope else return false
     * */
-    return prevToken?.isOperator(Operators.ParenthesesLeft) ?: true
+    return prevToken?.isOperator(Operators.PARENTHESES_LEFT) ?: true
 }
 
 fun BigDecimal.degreeToRadians(): BigDecimal = this * BigDecimal(PI) / BigDecimal(180)

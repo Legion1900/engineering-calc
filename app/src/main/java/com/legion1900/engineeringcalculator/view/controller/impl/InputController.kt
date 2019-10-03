@@ -20,7 +20,7 @@ class InputController(editText: EditText) :
         get() = previous?.isOperand == true
 
     private val isPrevRightScope: Boolean
-        get() = previous?.isOperator(Operators.ParenthesesRight) == true
+        get() = previous?.isOperator(Operators.PARENTHESES_RIGHT) == true
 
     private var openScopeCnt = 0
 
@@ -28,7 +28,7 @@ class InputController(editText: EditText) :
 
     override fun printNumber(num: CharSequence) {
         if (isPreviousLetter) return
-        val isPrevNotRightScope: Boolean = previous?.isOperator(Operators.ParenthesesRight) == false
+        val isPrevNotRightScope: Boolean = previous?.isOperator(Operators.PARENTHESES_RIGHT) == false
         if (isPrevNotRightScope || isPrevOperand || carriagePosition == 0) append(num)
     }
 
@@ -44,9 +44,9 @@ class InputController(editText: EditText) :
             append(op)
             return
         }
-        val isUnaryMinus: Boolean = (op.isOperator(Operators.Subtraction) && text.isEmpty())
-                || (op.isOperator(Operators.Subtraction)
-                && (previous?.isOperator(Operators.ParenthesesLeft) == true))
+        val isUnaryMinus: Boolean = (op.isOperator(Operators.SUBTRACTION) && text.isEmpty())
+                || (op.isOperator(Operators.SUBTRACTION)
+                && (previous?.isOperator(Operators.PARENTHESES_LEFT) == true))
         if (isUnaryMinus || isPrevOperand || isPrevRightScope) append(op)
         /*
         * If previous symbol dot => replace
@@ -99,7 +99,7 @@ class InputController(editText: EditText) :
         * If previous is number, dot or operator
         * */
         if (!isPreviousLetter) {
-            val isPrevLeftScope: Boolean = previous?.isOperator(Operators.ParenthesesLeft) == true
+            val isPrevLeftScope: Boolean = previous?.isOperator(Operators.PARENTHESES_LEFT) == true
             if (isPrevRightScope) {
                 openScopeCnt++
                 super.backspace()

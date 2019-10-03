@@ -7,21 +7,21 @@ enum class Precedence(value: Int) {
     /*
     * Comma, parentheses, etc.
     * */
-    Special(-1),
+    SPECIAL(-1),
     /*
     * Functions
     * */
-    Function(0),
+    FUNCTION(0),
     /*
-    * Unary operators
+    * UNARY operators
     * */
-    Unary(1),
+    UNARY(1),
     /*
     * For such ops as *, /, remainder.
     * */
-    Multiplicative(2),
+    MULTIPLICATIVE(2),
     /*
     * For such ops as +, -
     * */
-    Additive(3)
+    ADDITIVE(3)
 }

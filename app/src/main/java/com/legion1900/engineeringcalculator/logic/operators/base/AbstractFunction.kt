@@ -3,7 +3,7 @@ package com.legion1900.engineeringcalculator.logic.operators.base
 import java.math.BigDecimal
 
 abstract class AbstractFunction(arity: Int, denotation: String) :
-    AbstractOperator(arity, denotation, Precedence.Function.ordinal)
+    AbstractOperator(arity, denotation, Precedence.FUNCTION.ordinal)
 
 abstract class UnaryAbstractFunction(denotation: String) :
     AbstractFunction(1, denotation) {

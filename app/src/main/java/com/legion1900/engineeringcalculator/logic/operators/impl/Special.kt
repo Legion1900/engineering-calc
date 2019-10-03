@@ -8,13 +8,13 @@ import java.math.BigDecimal
 * Abstract class for representing special operators (parentheses, comma separators, etc.)
 * */
 class Special(symbol: String) :
-    AbstractOperator(0, symbol, Precedence.Special.ordinal) {
+    AbstractOperator(0, symbol, Precedence.SPECIAL.ordinal) {
     override fun execute(vararg args: BigDecimal): BigDecimal =
         throw UnsupportedOperationException()
 }
 
 class Constant(private val value: BigDecimal, symbol: String) :
-    AbstractOperator(0, symbol, Precedence.Function.ordinal) {
+    AbstractOperator(0, symbol, Precedence.FUNCTION.ordinal) {
     override fun execute(vararg args: BigDecimal): BigDecimal = value
 
 }
