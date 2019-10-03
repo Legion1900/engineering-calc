@@ -9,15 +9,13 @@ import java.util.*
 
 const val SEPARATOR = " "
 
-//TODO: add separate class for formatting string string (adding spaces after opening and before closing parentheses)
-
 /*
 * Partial implementation of shunting-yard algorithm.
 * */
 class ShuntingYardParser :
     Parser {
 
-    override fun toPostfix(exp: String): List<String> {
+    override fun toPostfix(exp: CharSequence): List<String> {
         val expression = exp.split(SEPARATOR)
         val operators = Operators.map
         val opStack = Stack<String>()

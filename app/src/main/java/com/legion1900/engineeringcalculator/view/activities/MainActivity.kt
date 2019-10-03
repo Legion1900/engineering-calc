@@ -1,4 +1,4 @@
-package com.legion1900.engineeringcalculator.view
+package com.legion1900.engineeringcalculator.view.activities
 
 import android.os.Bundle
 import android.view.View
@@ -7,16 +7,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.legion1900.engineeringcalculator.R
 import com.legion1900.engineeringcalculator.databinding.ActivityMainBinding
+import com.legion1900.engineeringcalculator.logic.calculator.impl.StackCalculator
 import com.legion1900.engineeringcalculator.logic.operators.impl.Operators
+import com.legion1900.engineeringcalculator.view.InputFormatter
 import com.legion1900.engineeringcalculator.view.adapters.KeyboardPagerAdapter
 import com.legion1900.engineeringcalculator.view.controller.base.EditTextCalculatorPrinter
 import com.legion1900.engineeringcalculator.view.controller.impl.InputController
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
-    lateinit var printer: EditTextCalculatorPrinter
+    private lateinit var printer: EditTextCalculatorPrinter
+
+    private val calculator = StackCalculator(InputFormatter())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +83,16 @@ class MainActivity : AppCompatActivity() {
 
     fun onClearClick(view: View) {
         printer.clear()
+    }
+
+    fun onEqualsClick(view: View) {
+        binding.etInput.text.let {
+            if (it.isEmpty()) return
+            binding.tvStory.text = it
+            val result = calculator.calculate(it)
+            it.clear()
+            it.append(result.toString())
+        }
     }
 
     private fun buildFuncSignature(func: Operators): String {

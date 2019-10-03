@@ -6,8 +6,6 @@ import com.legion1900.engineeringcalculator.logic.operators.impl.isOperand
 import java.math.BigDecimal
 import java.math.MathContext
 import java.util.*
-//TODO: add Calculator class for handling both parsing and evaluating
-// and Formatter for preparing string input
 
 class StackEvaluator(override val precision: Int = 32) :
     Evaluator {

@@ -112,8 +112,8 @@
         android:text="@string/_0" />
 
     <Button
-        android:onClick="test"
         style="@style/NumPadButtons"
+        android:onClick="onEqualsClick"
         android:text="@string/equals" />
 
     <Button

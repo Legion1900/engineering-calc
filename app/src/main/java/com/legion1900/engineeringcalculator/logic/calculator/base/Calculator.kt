@@ -7,7 +7,7 @@ abstract class Calculator(
     protected val parser: Parser,
     protected val evaluator: Evaluator
 ) {
-    fun calculate(input: String): BigDecimal {
+    fun calculate(input: CharSequence): BigDecimal {
         val exp = formatter.format(input)
         val postfix = parser.toPostfix(exp)
         return evaluator.evaluate(postfix)
